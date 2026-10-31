@@ -1,0 +1,35 @@
+[
+  {
+    "id": "job-1",
+    "title": "Accessibility Quality Analyst",
+    "company": "Inclusive Tech Labs",
+    "location": "Remote",
+    "accessibilityTags": [
+      "Screen Reader Friendly",
+      "Flexible Hours",
+      "Text-Based Communication"
+    ]
+  },
+  {
+    "id": "job-2",
+    "title": "Customer Support Specialist",
+    "company": "Sahaay Solutions",
+    "location": "Bengaluru / Hybrid",
+    "accessibilityTags": [
+      "Wheelchair Accessible",
+      "Assistive Tech Provided",
+      "Speech-to-Text Support"
+    ]
+  },
+  {
+    "id": "job-3",
+    "title": "Content Reviewer & Data Annotator",
+    "company": "Samarthya AI",
+    "location": "Remote",
+    "accessibilityTags": [
+      "Deaf-Friendly",
+      "Quiet Environment",
+      "Async Communication"
+    ]
+  }
+]

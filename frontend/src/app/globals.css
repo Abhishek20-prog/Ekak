@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* ===== SEVA FIRST — Design System ===== */
+/* Premium accessible color palette with glassmorphism accents */
+
+:root {
+  /* Core surfaces */
+  --background: #f4f6fb;
+  --foreground: #0e1525;
+  --card: #ffffff;
+  --card-foreground: #0e1525;
+  --border: #dde3f0;
+  --ring: #5b45e0;
+
+  /* Brand gradients (light) */
+  --grad-primary: linear-gradient(135deg, #5b45e0 0%, #3b8ef0 100%);
+  --grad-emerald: linear-gradient(135deg, #059669 0%, #0fb97f 100%);
+  --grad-amber: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+
+  /* Elevation shadows */
+  --shadow-card: 0 1px 3px 0 rgba(91,69,224,0.04), 0 1px 2px -1px rgba(91,69,224,0.04);
+  --shadow-card-hover: 0 8px 24px -4px rgba(91,69,224,0.12), 0 2px 8px -2px rgba(91,69,224,0.08);
+  --shadow-btn: 0 2px 8px 0 rgba(91,69,224,0.22);
+  --shadow-btn-hover: 0 4px 16px 0 rgba(91,69,224,0.32);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #080c18;
+    --foreground: #eef2ff;
+    --card: #0e1426;
+    --card-foreground: #eef2ff;
+    --border: #1a2240;
+    --ring: #7c6ff7;
+
+    --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.3), 0 1px 2px -1px rgba(0,0,0,0.3);
+    --shadow-card-hover: 0 8px 24px -4px rgba(91,69,224,0.25), 0 2px 8px -2px rgba(0,0,0,0.3);
+    --shadow-btn: 0 2px 8px 0 rgba(91,69,224,0.35);
+    --shadow-btn-hover: 0 4px 16px 0 rgba(91,69,224,0.45);
+  }
+}
+
+/* ===== Adaptive Font Scale ===== */
+html {
+  font-size: calc(100% * var(--font-scale, 1));
+  scroll-behavior: smooth;
+}
+
+/* ===== Base Typography (WCAG 1.4.12) ===== */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family:
+    var(--font-geist-sans),
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  min-height: 100vh;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  word-spacing: 0.02em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Subtle dot-grid background texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(circle at 25% 10%, rgba(91,69,224,0.04) 0%, transparent 55%),
+    radial-gradient(circle at 75% 85%, rgba(59,142,240,0.04) 0%, transparent 55%);
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    background-image:
+      radial-gradient(circle at 25% 10%, rgba(91,69,224,0.07) 0%, transparent 55%),
+      radial-gradient(circle at 75% 85%, rgba(59,142,240,0.06) 0%, transparent 55%);
+  }
+}
+
+/* Heading hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+h1 { letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+h2 { letter-spacing: -0.025em; margin-bottom: 0.35rem; }
+h3 { letter-spacing: -0.015em; margin-bottom: 0.25rem; }
+
+p {
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+  text-wrap: pretty;
+}
+
+/* Devanagari (Hindi) optical metrics */
+html[lang="hi"] body {
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+  word-spacing: 0.03em;
+}
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3 {
+  line-height: 1.32;
+  letter-spacing: normal;
+}
+
+/* ===== Focus Rings ===== */
+:focus-visible {
+  outline: 3px solid #5b45e0;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ===== Premium Card Elevation ===== */
+.seva-card {
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.seva-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ===== Glassmorphism header/nav ===== */
+.glass {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(221,227,240,0.7);
+}
+@media (prefers-color-scheme: dark) {
+  .glass {
+    background: rgba(14,20,38,0.82);
+    border-bottom: 1px solid rgba(26,34,64,0.7);
+  }
+}
+
+/* ===== Gradient text utility ===== */
+.gradient-text {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Premium button ===== */
+.btn-primary {
+  background: var(--grad-primary) !important;
+  box-shadow: var(--shadow-btn);
+  transition: box-shadow 0.18s ease, transform 0.15s ease, filter 0.18s ease;
+}
+.btn-primary:hover {
+  box-shadow: var(--shadow-btn-hover);
+  filter: brightness(1.06);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  filter: brightness(0.97);
+}
+
+/* ===== Simple Text Mode (WCAG 1.4.12 AAA) ===== */
+html[data-simple="true"] body {
+  line-height: 1.95 !important;
+  letter-spacing: 0.03em !important;
+  word-spacing: 0.06em !important;
+}
+html[data-simple="true"] p {
+  line-height: 2.0 !important;
+  margin-bottom: 1.1rem !important;
+}
+html[data-simple="true"] h1,
+html[data-simple="true"] h2 {
+  line-height: 1.38 !important;
+  margin-bottom: 0.75rem !important;
+}
+html[data-simple="true"] .optional-detail {
+  display: none !important;
+}
+
+/* ===== High Contrast Mode (WCAG AAA) ===== */
+html[data-contrast="high"],
+html[data-contrast="high"] body {
+  --background: #000000;
+  --foreground: #ffff00;
+  --card: #000000;
+  --card-foreground: #ffff00;
+  --border: #ffff00;
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  letter-spacing: 0.025em;
+}
+html[data-contrast="high"] * {
+  border-color: #ffff00 !important;
+}
+html[data-contrast="high"] button,
+html[data-contrast="high"] a,
+html[data-contrast="high"] [role="button"],
+html[data-contrast="high"] input,
+html[data-contrast="high"] select {
+  border: 2px solid #ffff00 !important;
+}
+html[data-contrast="high"] .btn-primary,
+html[data-contrast="high"] .bg-gradient-to-r,
+html[data-contrast="high"] [class*="from-indigo"] {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+html[data-contrast="high"] .badge-highlight {
+  background: transparent !important;
+  color: #ffff00 !important;
+  border: 1px solid #ffff00 !important;
+}
+html[data-contrast="high"] .glass {
+  background: #000000 !important;
+}
+html[data-contrast="high"] :focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* ===== Scrollbar (webkit) ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(91,69,224,0.25);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(91,69,224,0.45);
+}
+
+/* ===== Smooth nav transitions ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.3s ease forwards;
+}
+
+/* ===== Spinner ===== */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 0.75s linear infinite;
+}
+
+/* ===== Ping (pulse dot) ===== */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.animate-ping {
+  animation: ping 1.2s cubic-bezier(0,0,0.2,1) infinite;
+}

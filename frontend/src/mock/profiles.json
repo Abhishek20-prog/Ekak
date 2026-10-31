@@ -1,0 +1,12 @@
+{
+  "ramesh": {
+    "disabilities": ["deaf", "speech"],
+    "language": "hi",
+    "mode": { "captions": true, "voice": false, "simpleText": false, "highContrast": false, "fontScale": 1.0 }
+  },
+  "priya": {
+    "disabilities": ["blind", "motor"],
+    "language": "en",
+    "mode": { "captions": false, "voice": true, "simpleText": false, "highContrast": true, "fontScale": 1.25 }
+  }
+}

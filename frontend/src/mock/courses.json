@@ -1,0 +1,20 @@
+[
+  {
+    "id": "course-1",
+    "title": "Digital Literacy & Screen Reader Navigation",
+    "language": "en",
+    "description": "Learn fundamental computer skills and keyboard navigation techniques with popular screen readers."
+  },
+  {
+    "id": "course-2",
+    "title": "Indian Sign Language (ISL) Basics for the Workplace",
+    "language": "hi",
+    "description": "Essential ISL vocabulary and visual communication strategies for inclusive professional environments."
+  },
+  {
+    "id": "course-3",
+    "title": "Accessible Web Development Fundamentals",
+    "language": "en",
+    "description": "Introduction to semantic HTML, ARIA landmarks, and building accessible user experiences."
+  }
+]
