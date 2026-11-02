@@ -201,7 +201,7 @@ html[lang="hi"] h3 {
   backdrop-filter: blur(12px);
 }
 
-/* ===== Glassmorphism header/nav ===== */
+/* ===== Glassmorphism header/nav (legacy) ===== */
 .glass {
   background: rgba(251,248,243,0.85);
   backdrop-filter: blur(18px) saturate(180%);
@@ -213,6 +213,92 @@ html[lang="hi"] h3 {
     background: rgba(16,14,13,0.88);
     border-bottom: 1px solid rgba(47,40,36,0.7);
   }
+}
+
+/* ===== Ekak Rich Header ===== */
+.ekak-header {
+  background: rgba(251,248,243,0.90);
+  backdrop-filter: blur(28px) saturate(210%);
+  -webkit-backdrop-filter: blur(28px) saturate(210%);
+  border-bottom: 1px solid rgba(230,222,212,0.65);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.70) inset,
+    0 6px 24px -6px rgba(13,115,119,0.13),
+    0 1px 6px rgba(0,0,0,0.05);
+}
+@media (prefers-color-scheme: dark) {
+  .ekak-header {
+    background: rgba(16,14,13,0.94);
+    border-bottom: 1px solid rgba(47,40,36,0.80);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 6px 24px -4px rgba(0,0,0,0.55);
+  }
+}
+
+/* Animated rainbow-ish glow strip at top edge */
+@keyframes headerGlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.ekak-header-glow-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    #0d7377, #14968a, #f59e0b, #c8531e, #6c47b5, #1dbfb2, #0d7377
+  );
+  background-size: 300% 100%;
+  animation: headerGlow 6s ease infinite;
+}
+
+/* Settings button active glow state */
+.ekak-settings-active {
+  background: linear-gradient(135deg, #0d7377, #128286 55%, #159b8e) !important;
+  box-shadow:
+    0 4px 16px -2px rgba(13,115,119,0.45),
+    0 0 0 3px rgba(13,115,119,0.18);
+}
+
+/* ===== Ekak Floating Bottom Nav ===== */
+/* Outer wrapper: transparent so body glow shows through */
+.ekak-bottom-nav {
+  background: transparent;
+}
+
+/* The pill itself: rich layered glassmorphism */
+.ekak-nav-pill {
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(28px) saturate(220%);
+  -webkit-backdrop-filter: blur(28px) saturate(220%);
+  border: 1.5px solid rgba(230,222,212,0.80);
+  box-shadow:
+    0 -2px 0 rgba(255,255,255,0.5) inset,
+    0 2px 0 rgba(0,0,0,0.03) inset,
+    0 8px 32px -4px rgba(13,115,119,0.18),
+    0 4px 12px -2px rgba(0,0,0,0.12),
+    0 0 0 1px rgba(255,255,255,0.30);
+}
+@media (prefers-color-scheme: dark) {
+  .ekak-nav-pill {
+    background: rgba(22,18,16,0.92);
+    border-color: rgba(60,50,44,0.80);
+    box-shadow:
+      0 -1px 0 rgba(255,255,255,0.06) inset,
+      0 8px 32px -4px rgba(0,0,0,0.65),
+      0 0 0 1px rgba(255,255,255,0.05);
+  }
+}
+
+/* Animate the nav into view from bottom on mount */
+@keyframes navSlideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ekak-nav-pill {
+  animation: navSlideUp 0.40s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ===== Gradient text utility ===== */
@@ -341,7 +427,9 @@ html[data-contrast="high"] .badge-highlight {
   color: #ffff00 !important;
   border: 1px solid #ffff00 !important;
 }
-html[data-contrast="high"] .glass {
+html[data-contrast="high"] .glass,
+html[data-contrast="high"] .ekak-header,
+html[data-contrast="high"] .ekak-nav-pill {
   background: #000000 !important;
 }
 html[data-contrast="high"] :focus-visible {
