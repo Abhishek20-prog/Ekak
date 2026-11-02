@@ -1,9 +1,10 @@
 "use client";
-// Accessible top header for SEVA FIRST — glassmorphism, gradient brand, adaptive status pills
+// Accessible top header for Ekak — glassmorphism, brand logo, adaptive status pills
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
+import { EkakLogo } from "@/components/ui";
 
 export default function Header() {
   const pathname = usePathname();
@@ -17,25 +18,10 @@ export default function Header() {
       {/* Brand logo & title */}
       <Link
         href="/home"
-        className="group flex items-center gap-2.5 rounded-xl p-1 focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500"
-        aria-label="SEVA FIRST Home Dashboard"
+        className="group flex items-center rounded-xl p-1 focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600"
+        aria-label="Ekak Home Dashboard"
       >
-        <span
-          aria-hidden="true"
-          className="flex h-9 w-9 items-center justify-center rounded-xl text-xl text-white shadow-md group-hover:scale-105 transition-transform"
-          style={{ background: "var(--grad-primary)" }}
-        >
-          🤝
-        </span>
-        <div className="flex flex-col">
-          <span className="text-lg font-black tracking-tight text-foreground flex items-center gap-1 leading-tight">
-            SEVA{" "}
-            <span className="gradient-text">FIRST</span>
-          </span>
-          <span className="text-[0.63rem] font-semibold uppercase tracking-widest text-foreground/50 -mt-0.5">
-            Accessibility PWA
-          </span>
-        </div>
+        <EkakLogo size="sm" />
       </Link>
 
       {/* Status pills + settings */}
@@ -47,30 +33,29 @@ export default function Header() {
         >
           <span>{language === "hi" ? "🇮🇳 हिन्दी" : "🌐 English"}</span>
           {mode.fontScale > 1.0 && (
-            <span className="text-indigo-600 dark:text-indigo-400 font-bold">
+            <span className="text-teal-700 dark:text-teal-400 font-bold">
               • {mode.fontScale}×
             </span>
           )}
           {mode.highContrast && (
-            <span className="text-yellow-500 font-bold">• HC</span>
+            <span className="text-yellow-600 dark:text-yellow-400 font-bold">• HC</span>
           )}
           {mode.captions && (
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">• CC</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold">• CC</span>
           )}
           {mode.voice && (
-            <span className="text-violet-600 dark:text-violet-400 font-bold">• 🎙</span>
+            <span className="text-amber-700 dark:text-amber-400 font-bold">• 🎙</span>
           )}
         </div>
 
         {/* Settings button */}
         <Link
           href="/settings"
-          className={`flex min-h-[38px] min-w-[38px] items-center justify-center gap-1.5 rounded-xl border px-3 py-1 text-xs sm:text-sm font-bold transition-all focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500 ${
+          className={`flex min-h-[38px] min-w-[38px] items-center justify-center gap-1.5 rounded-xl border px-3 py-1 text-xs sm:text-sm font-bold transition-all focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
             isSettingsActive
-              ? "text-white border-transparent shadow-md"
+              ? "text-white border-transparent shadow-md btn-primary"
               : "border-foreground/15 bg-foreground/5 hover:bg-foreground/10 text-foreground"
           }`}
-          style={isSettingsActive ? { background: "var(--grad-primary)", boxShadow: "var(--shadow-btn)" } : {}}
           aria-label="Accessibility Settings"
           aria-current={isSettingsActive ? "page" : undefined}
         >

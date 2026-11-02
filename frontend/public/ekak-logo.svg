@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" fill="none" role="img" aria-label="Ekak Logo">
+  <!-- Defs & Gradients -->
+  <defs>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D7377" />
+      <stop offset="100%" stop-color="#14968A" />
+    </linearGradient>
+    <linearGradient id="saffronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E07A3A" />
+      <stop offset="100%" stop-color="#C55A2B" />
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0D7377" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <!-- Emblem / Icon Group -->
+  <g transform="translate(4, 4)">
+    <!-- Protective Outer Embrace Ring -->
+    <circle cx="28" cy="28" r="26" fill="url(#tealGrad)" filter="url(#softShadow)" />
+    
+    <!-- Inner Organic Flow (Stylized Unity '१' and 'E' in white & saffron) -->
+    <!-- Base cradle (Human hands / support arc) -->
+    <path d="M16 34 C16 42, 40 42, 40 34 C40 29, 36 26, 28 26 C20 26, 16 29, 16 34 Z" fill="#FFFFFF" fill-opacity="0.95" />
+    
+    <!-- Central Rising Figure / Devanagari 1 stem -->
+    <path d="M25 18 C25 15, 28 14, 30 16 L31 34 C31 35.5, 25 35.5, 25 34 Z" fill="#FFFFFF" />
+    
+    <!-- Saffron Beacon / Crown (Spark of unique human ability) -->
+    <circle cx="28" cy="13" r="4.5" fill="url(#saffronGrad)" stroke="#FFFFFF" stroke-width="1.5" />
+  </g>
+
+  <!-- Brand Typography -->
+  <!-- Main wordmark "EKAK" -->
+  <text x="68" y="38" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" letter-spacing="-0.03em" fill="#0D7377">
+    EKAK
+  </text>
+  <!-- Devanagari text badge "एकक" -->
+  <text x="146" y="37" font-family="'Nirmala UI', 'Noto Sans Devanagari', sans-serif" font-size="16" font-weight="700" fill="#C55A2B">
+    [एकक]
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="70" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" letter-spacing="0.16em" text-transform="uppercase" fill="#6B655B">
+    ACCESSIBILITY FOR EVERY ONE
+  </text>
+</svg>
+

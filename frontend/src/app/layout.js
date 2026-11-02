@@ -10,16 +10,19 @@ const inter = Inter({
 });
 
 export const viewport = {
-  themeColor: "#5b45e0",
+  themeColor: "#0d7377",
   width: "device-width",
   initialScale: 1,
 };
 
 export const metadata = {
-  title: "SEVA FIRST — Accessible Learning, Work & Communication",
+  title: "EKAK (एकक) — Accessible Living, Learning, Work & Communication",
   description:
-    "An accessibility-first PWA for people with disabilities in India — adaptive UI for deaf, blind, motor, and cognitive needs. Learn, work, and connect inclusively.",
+    "Ekak is an accessibility-first inclusive platform for individuals with disabilities in India — adaptive UI for deaf, blind, motor, and cognitive needs. Every one matters.",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/ekak-logo.svg",
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -1,11 +1,11 @@
-// Premium PageTitle — gradient badge, tight hierarchy, animated entrance
+// PageTitle — teal badge, tight hierarchy, animated entrance
 
 export default function PageTitle({ title, subtitle, badge, className = "" }) {
   return (
     <div className={`animate-fade-up space-y-2.5 ${className}`}>
       {badge && (
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/25 bg-indigo-500/10 px-3 py-1 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-          <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" aria-hidden="true" />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-600/25 bg-teal-600/10 px-3 py-1 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-teal-700 dark:text-teal-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-pulse" aria-hidden="true" />
           {badge}
         </span>
       )}

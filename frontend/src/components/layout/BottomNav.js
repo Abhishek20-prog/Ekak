@@ -1,5 +1,5 @@
 "use client";
-// Accessible bottom navigation dock — glassmorphism, gradient active pill, smooth transitions
+// Accessible bottom navigation dock — warm glassmorphism, teal active state
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,7 +18,7 @@ export default function BottomNav() {
     <nav
       aria-label="Main Navigation"
       className="glass fixed bottom-0 left-0 right-0 z-30 px-2 py-1.5 transition-all"
-      style={{ borderTop: "1px solid rgba(221,227,240,0.55)" }}
+      style={{ borderTop: "1px solid rgba(228,221,211,0.65)" }}
     >
       <div className="mx-auto flex max-w-sm items-center justify-around gap-1">
         {NAV_ITEMS.map((item) => {
@@ -28,12 +28,11 @@ export default function BottomNav() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? "page" : undefined}
-              className={`group flex min-h-[50px] min-w-[60px] flex-1 flex-col items-center justify-center rounded-2xl py-1.5 px-1 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500 active:scale-95 ${
+              className={`group flex min-h-[50px] min-w-[60px] flex-1 flex-col items-center justify-center rounded-2xl py-1.5 px-1 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 active:scale-95 ${
                 isActive
                   ? "text-white font-bold shadow-md btn-primary"
-                  : "text-foreground/65 hover:bg-foreground/8 hover:text-foreground"
+                  : "text-foreground/70 hover:bg-foreground/8 hover:text-foreground"
               }`}
-              style={isActive ? { background: "var(--grad-primary)", boxShadow: "var(--shadow-btn)" } : {}}
             >
               <span
                 aria-hidden="true"

@@ -1,30 +1,24 @@
 "use client";
-// Accessible Onboarding Screen with modern selection cards, indigo gradient highlights, and error alerts
+// Accessible Onboarding Screen — Ekak brand, warm palette, robust multi-disability selection
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
 import { buildProfile } from "@/lib/profileDefaults";
-import { PageTitle, BigButton } from "@/components/ui";
+import { PageTitle, BigButton, EkakLogo } from "@/components/ui";
 
 const DISABILITIES = [
-  { id: "deaf", icon: "🦻", label: "Deaf / Hard of hearing", hint: "सुनने में कठिनाई" },
-  { id: "speech", icon: "🗣️", label: "Speech difficulty", hint: "बोलने में कठिनाई" },
-  { id: "blind", icon: "👁️", label: "Blind / Low vision", hint: "देखने में कठिनाई" },
-  { id: "motor", icon: "✋", label: "Motor / Mobility", hint: "हाथ-पैर चलाने में कठिनाई" },
-  { id: "cognitive", icon: "🧠", label: "Cognitive / Learning", hint: "समझने-सीखने में कठिनाई" },
+  { id: "deaf", icon: "🦻", label: "Deaf / Hard of hearing", hint: "सुनने में कठिनाई", assist: "Captions + Visual Indicators" },
+  { id: "speech", icon: "🗣️", label: "Speech difficulty", hint: "बोलने में कठिनाई", assist: "AAC Board + Text to Speech" },
+  { id: "blind", icon: "👁️", label: "Blind / Low vision", hint: "देखने में कठिनाई", assist: "Voice Control + High Contrast + 1.25x Font" },
+  { id: "motor", icon: "✋", label: "Motor / Mobility", hint: "हाथ-पैर चलाने में कठिनाई", assist: "Voice Commands + Large Targets" },
+  { id: "cognitive", icon: "🧠", label: "Cognitive / Learning", hint: "समझने-सीखने में कठिनाई", assist: "Simple Text Mode + Extra Spacing" },
 ];
 
 const LANGUAGES = [
-  { id: "en", label: "English", sublabel: "Standard UI" },
-  { id: "hi", label: "हिन्दी (Hindi)", sublabel: "हिंदी इंटरफेस" },
+  { id: "en", label: "English", sublabel: "Standard UI & Voice" },
+  { id: "hi", label: "हिन्दी (Hindi)", sublabel: "हिंदी इंटरफेस एवं हिंदी आवाज" },
 ];
-
-const cardBase =
-  "group relative flex min-h-[8rem] flex-col items-center justify-center gap-1.5 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800/90 bg-card p-5 text-center cursor-pointer transition-all duration-200 " +
-  "hover:border-indigo-400 hover:shadow-md active:scale-95 " +
-  "peer-checked:bg-gradient-to-br peer-checked:from-indigo-600 peer-checked:to-blue-600 peer-checked:text-white peer-checked:border-indigo-600 peer-checked:shadow-lg peer-checked:shadow-indigo-500/25 " +
-  "peer-focus-visible:outline peer-focus-visible:outline-4 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-indigo-500";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -43,7 +37,7 @@ export default function OnboardingPage() {
   function handleSubmit(e) {
     e.preventDefault();
     if (selected.length === 0) {
-      setError("Please select at least one option so SEVA FIRST can adapt to your needs.");
+      setError("Please select at least one option so Ekak can adapt to your needs.");
       return;
     }
     saveProfile(buildProfile(selected, language));
@@ -51,24 +45,19 @@ export default function OnboardingPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl p-4 sm:p-8 lg:p-12 space-y-8">
+    <main className="mx-auto max-w-4xl p-4 sm:p-8 lg:p-12 space-y-8 animate-fade-up">
       {/* Brand Header */}
-      <div className="flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-500 text-2xl text-white shadow-md shadow-indigo-500/20"
-        >
-          🤝
-        </span>
-        <span className="text-2xl font-black tracking-tight text-foreground">
-          SEVA <span className="bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">FIRST</span>
+      <div className="flex items-center justify-between gap-4 border-b border-stone-200/80 dark:border-stone-800/80 pb-5">
+        <EkakLogo size="md" />
+        <span className="text-xs font-bold px-3 py-1 rounded-full border border-teal-600/30 bg-teal-600/10 text-teal-800 dark:text-teal-300">
+          Personalized Setup
         </span>
       </div>
 
       <PageTitle
-        badge="Personalized Setup"
-        title="Welcome to SEVA FIRST"
-        subtitle="Tell us how you would like the app to assist you. You can pick more than one option. The entire interface will adapt in real-time."
+        badge="Adaptive Accessibility"
+        title="Welcome to Ekak (एकक)"
+        subtitle="Tell us how you would like the interface to assist you. You can choose one or multiple options. Ekak adapts layout, typography, assistive speech, and colors in real-time."
       />
 
       <form onSubmit={handleSubmit} noValidate className="space-y-10">
@@ -77,40 +66,63 @@ export default function OnboardingPage() {
           <legend className="text-xl sm:text-2xl font-black text-foreground tracking-tight">
             1. Which of these apply to you?
           </legend>
-          <p className="text-sm text-foreground/75 font-medium -mt-2">
-            Select all that apply. We support multiple combined disabilities.
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-2 -mt-2">
+            <p className="text-sm text-foreground/75 font-medium">
+              Select all that apply. Ekak seamlessly combines multiple assistive features.
+            </p>
+            {selected.length > 0 && (
+              <span className="text-xs font-bold text-teal-700 dark:text-teal-400 bg-teal-600/10 px-2.5 py-1 rounded-lg">
+                {selected.length} {selected.length === 1 ? "option" : "options"} selected
+              </span>
+            )}
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div
+            role="group"
+            aria-label="Disability options — select all that apply"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+          >
             {DISABILITIES.map((d) => {
               const isChecked = selected.includes(d.id);
               return (
-                <label key={d.id} className="block">
-                  <input
-                    type="checkbox"
-                    className="peer sr-only"
-                    checked={isChecked}
-                    onChange={() => toggle(d.id)}
-                  />
-                  <div className={cardBase}>
-                    <span className="text-4xl leading-none transition-transform group-hover:scale-110" aria-hidden="true">
-                      {d.icon}
-                    </span>
-                    <span className="text-base sm:text-lg font-bold tracking-tight">
-                      {d.label}
-                    </span>
-                    <span className="text-xs sm:text-sm opacity-80 font-medium">
-                      {d.hint}
-                    </span>
-                    <span className={`text-xs font-black tracking-wider uppercase mt-1 rounded-full px-2.5 py-0.5 border ${
-                      isChecked
-                        ? "bg-white/20 border-white text-white"
-                        : "hidden"
-                    }`}>
+                <button
+                  key={d.id}
+                  type="button"
+                  role="checkbox"
+                  aria-checked={isChecked}
+                  aria-label={`${d.label} — ${d.hint}`}
+                  onClick={() => toggle(d.id)}
+                  className={`group relative flex min-h-[9rem] flex-col items-center justify-center gap-1.5 rounded-3xl border-2 p-5 text-center cursor-pointer transition-all duration-200
+                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-teal-600
+                    active:scale-95
+                    ${isChecked
+                      ? "border-teal-700 bg-teal-700 text-white shadow-md shadow-teal-900/20"
+                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-teal-600 hover:shadow-xs"
+                    }`}
+                >
+                  <span className="text-4xl leading-none transition-transform group-hover:scale-110" aria-hidden="true">
+                    {d.icon}
+                  </span>
+                  <span className="text-base sm:text-lg font-bold tracking-tight">
+                    {d.label}
+                  </span>
+                  <span className={`text-xs sm:text-sm font-medium ${isChecked ? "text-teal-100" : "text-foreground/70"}`}>
+                    {d.hint}
+                  </span>
+                  
+                  {/* Adaptive preview badge */}
+                  <span className={`text-[0.65rem] font-semibold mt-1 px-2 py-0.5 rounded-md ${
+                    isChecked ? "bg-white/20 text-white" : "bg-stone-100 dark:bg-stone-800 text-foreground/60"
+                  }`}>
+                    {d.assist}
+                  </span>
+
+                  {isChecked && (
+                    <span className="text-xs font-black tracking-wider uppercase mt-1 rounded-full px-2.5 py-0.5 border bg-white/20 border-white/60 text-white">
                       ✓ Selected
                     </span>
-                  </div>
-                </label>
+                  )}
+                </button>
               );
             })}
           </div>
@@ -122,41 +134,46 @@ export default function OnboardingPage() {
             2. Choose preferred language
           </legend>
           <p className="text-sm text-foreground/75 font-medium -mt-2">
-            Text, captions, and speech commands will adapt to this language.
+            Captions, Indian Sign Language tracks, and text-to-speech voice will automatically adapt.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div
+            role="radiogroup"
+            aria-label="Language selection"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
             {LANGUAGES.map((l) => {
               const isChecked = language === l.id;
               return (
-                <label key={l.id} className="block">
-                  <input
-                    type="radio"
-                    name="language"
-                    className="peer sr-only"
-                    value={l.id}
-                    checked={isChecked}
-                    onChange={() => setLanguage(l.id)}
-                  />
-                  <div className={cardBase}>
-                    <span className="text-2xl leading-none" aria-hidden="true">
-                      {l.id === "hi" ? "🇮🇳" : "🌐"}
+                <button
+                  key={l.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={isChecked}
+                  onClick={() => setLanguage(l.id)}
+                  className={`group relative flex min-h-[7.5rem] flex-col items-center justify-center gap-1 rounded-3xl border-2 p-5 text-center cursor-pointer transition-all duration-200
+                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-teal-600
+                    active:scale-95
+                    ${isChecked
+                      ? "border-teal-700 bg-teal-700 text-white shadow-md shadow-teal-900/20"
+                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-teal-600 hover:shadow-xs"
+                    }`}
+                >
+                  <span className="text-2xl leading-none" aria-hidden="true">
+                    {l.id === "hi" ? "🇮🇳" : "🌐"}
+                  </span>
+                  <span className="text-lg font-bold tracking-tight">
+                    {l.label}
+                  </span>
+                  <span className={`text-xs font-medium ${isChecked ? "text-teal-100" : "text-foreground/70"}`}>
+                    {l.sublabel}
+                  </span>
+                  {isChecked && (
+                    <span className="text-xs font-black tracking-wider uppercase mt-1 rounded-full px-2.5 py-0.5 border bg-white/20 border-white/60 text-white">
+                      ✓ Active
                     </span>
-                    <span className="text-lg font-bold tracking-tight">
-                      {l.label}
-                    </span>
-                    <span className="text-xs opacity-80 font-medium">
-                      {l.sublabel}
-                    </span>
-                    <span className={`text-xs font-black tracking-wider uppercase mt-1 rounded-full px-2.5 py-0.5 border ${
-                      isChecked
-                        ? "bg-white/20 border-white text-white"
-                        : "hidden"
-                    }`}>
-                      ✓ Selected
-                    </span>
-                  </div>
-                </label>
+                  )}
+                </button>
               );
             })}
           </div>
@@ -173,13 +190,24 @@ export default function OnboardingPage() {
           </div>
         )}
 
+        {/* About Ekak Concept Note */}
+        <aside className="rounded-2xl border border-amber-600/30 bg-amber-600/5 p-4 sm:p-5 text-sm space-y-1">
+          <p className="font-extrabold text-amber-800 dark:text-amber-400 flex items-center gap-2">
+            <span>💡</span>
+            <span>What does &quot;Ekak&quot; (एकक) mean?</span>
+          </p>
+          <p className="text-foreground/80 leading-relaxed font-normal">
+            In Sanskrit and Hindi, <strong>Ekak (एकक)</strong> signifies the <em>fundamental unit</em> — complete, whole, and dignified in itself. Ekak recognizes that every single individual with diverse abilities is an indispensable unit of our society.
+          </p>
+        </aside>
+
         {/* Submit */}
         <BigButton
           type="submit"
           variant="primary"
-          className="w-full !py-4 !text-xl shadow-lg shadow-indigo-500/25"
+          className="w-full !py-4 !text-xl shadow-lg"
         >
-          Continue to SEVA FIRST →
+          Continue to Ekak →
         </BigButton>
       </form>
     </main>

@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
+import { EkakLogo } from "@/components/ui";
 
 export default function RootPage() {
   const router = useRouter();
@@ -20,9 +21,9 @@ export default function RootPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 text-center">
-      <div role="status" aria-live="polite" className="space-y-3">
-        <h1 className="text-2xl font-bold tracking-tight">SEVA FIRST</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
+      <div role="status" aria-live="polite" className="flex flex-col items-center space-y-4">
+        <EkakLogo size="lg" />
+        <p className="text-sm font-semibold text-foreground/70">
           Loading accessible experience...
         </p>
       </div>

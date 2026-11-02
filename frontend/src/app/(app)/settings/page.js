@@ -1,5 +1,5 @@
 "use client";
-// Accessible Settings screen: live toggles for captions, voice, simple text, high contrast, font size scale (A-/A+), language switch, and reset
+// Accessible Settings screen for Ekak: live toggles for captions, voice, simple text, high contrast, font size scale (A-/A+), language switch, and reset
 
 import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
@@ -27,7 +27,7 @@ export default function SettingsPage() {
     return (
       <main className="mx-auto max-w-4xl p-6 sm:p-10">
         <div role="status" aria-live="polite" className="flex items-center gap-3">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-teal-700 border-t-transparent" />
           <p className="text-lg font-bold">Loading settings...</p>
         </div>
       </main>
@@ -55,10 +55,10 @@ export default function SettingsPage() {
     FONT_SCALES.find((s) => Math.abs(s.value - mode.fontScale) < 0.05) || FONT_SCALES[0];
 
   return (
-    <main className="mx-auto max-w-4xl space-y-8 sm:space-y-9 p-4 sm:p-6 lg:p-8">
+    <main className="mx-auto max-w-4xl space-y-8 sm:space-y-9 p-4 sm:p-6 lg:p-8 animate-fade-up">
       {/* 1. Header */}
       <PageTitle
-        badge={isHi ? "अनुकूलन सेटिंग्स" : "Personal Preferences"}
+        badge={isHi ? "अनुकूलन सेटिंग्स • एकाक" : "Personal Preferences • Ekak"}
         title={isHi ? "सुलभता सेटिंग्स (Settings)" : "Accessibility Settings"}
         subtitle={
           isHi
@@ -141,8 +141,8 @@ export default function SettingsPage() {
 
       {/* 3. Font Size Control (A- / A+) */}
       <section aria-labelledby="font-scale-heading">
-        <Card as="div" accentColor="indigo" className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
+        <Card as="div" accentColor="teal" className="space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-stone-200/80 dark:border-stone-800/80 pb-3.5">
             <div className="flex items-center gap-2.5">
               <span aria-hidden="true" className="text-2xl">🔤</span>
               <div>
@@ -155,7 +155,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 font-bold text-xs sm:text-sm text-indigo-600 dark:text-indigo-400">
+            <div className="rounded-xl border border-teal-600/30 bg-teal-600/10 px-3 py-1 font-bold text-xs sm:text-sm text-teal-800 dark:text-teal-300">
               {isHi ? currentScaleObj.labelHi : currentScaleObj.labelEn}
             </div>
           </div>
@@ -201,8 +201,8 @@ export default function SettingsPage() {
 
       {/* 4. Language Selection */}
       <section aria-labelledby="language-heading">
-        <Card as="div" accentColor="emerald" className="space-y-4">
-          <div className="flex items-center gap-2.5 border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
+        <Card as="div" accentColor="olive" className="space-y-4">
+          <div className="flex items-center gap-2.5 border-b border-stone-200/80 dark:border-stone-800/80 pb-3.5">
             <span aria-hidden="true" className="text-2xl">🌐</span>
             <div>
               <h2 id="language-heading" className="text-lg sm:text-xl font-black text-foreground">
@@ -219,10 +219,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => handleLanguageChange("en")}
-              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500 ${
+              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
                 language === "en"
-                  ? "border-indigo-600 bg-indigo-500/10 text-foreground shadow-xs"
-                  : "border-slate-200/90 dark:border-slate-800/90 hover:border-indigo-400 bg-card"
+                  ? "border-teal-700 bg-teal-700/10 text-foreground shadow-xs"
+                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-teal-600 bg-card"
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -233,7 +233,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               {language === "en" && (
-                <span className="rounded-full bg-indigo-600 text-white px-2 py-0.5 text-xs font-bold">
+                <span className="rounded-full bg-teal-700 text-white px-2 py-0.5 text-xs font-bold">
                   ✓ Active
                 </span>
               )}
@@ -243,10 +243,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => handleLanguageChange("hi")}
-              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500 ${
+              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
                 language === "hi"
-                  ? "border-indigo-600 bg-indigo-500/10 text-foreground shadow-xs"
-                  : "border-slate-200/90 dark:border-slate-800/90 hover:border-indigo-400 bg-card"
+                  ? "border-teal-700 bg-teal-700/10 text-foreground shadow-xs"
+                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-teal-600 bg-card"
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -257,7 +257,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               {language === "hi" && (
-                <span className="rounded-full bg-indigo-600 text-white px-2 py-0.5 text-xs font-bold">
+                <span className="rounded-full bg-teal-700 text-white px-2 py-0.5 text-xs font-bold">
                   ✓ सक्रिय
                 </span>
               )}
@@ -268,8 +268,8 @@ export default function SettingsPage() {
 
       {/* 5. Active Disabilities & Profile Re-configuration */}
       <section aria-labelledby="disability-profile-heading">
-        <Card as="div" accentColor="amber" className="space-y-4">
-          <div className="flex items-center gap-2.5 border-b border-slate-200/80 dark:border-slate-800/80 pb-3.5">
+        <Card as="div" accentColor="saffron" className="space-y-4">
+          <div className="flex items-center gap-2.5 border-b border-stone-200/80 dark:border-stone-800/80 pb-3.5">
             <span aria-hidden="true" className="text-2xl">👤</span>
             <div>
               <h2 id="disability-profile-heading" className="text-lg sm:text-xl font-black text-foreground">
@@ -306,7 +306,7 @@ export default function SettingsPage() {
           <div className="pt-1">
             <Link
               href="/onboarding"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-background px-4 py-2 text-xs sm:text-sm font-bold text-foreground transition-all hover:bg-current/10 hover:border-current focus-visible:outline focus-visible:outline-4 focus-visible:outline-indigo-500"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2 text-xs sm:text-sm font-bold text-foreground transition-all hover:bg-current/10 hover:border-current focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600"
             >
               <span aria-hidden="true">✏️</span>
               <span>{isHi ? "दिव्यांगता विकल्प बदलें (Re-configure)" : "Change My Disabilities (Re-onboard)"}</span>

@@ -1,5 +1,5 @@
 "use client";
-// Accessible Learn screen: displays accessible courses from getCourses() with ISL, screen reader, and captions support
+// Accessible, Feature-Rich Learn screen for Ekak: displays accessible courses with ISL, screen reader, and captions support
 
 import { useState, useEffect } from "react";
 import useProfile from "@/hooks/useProfile";
@@ -24,7 +24,7 @@ export default function LearnPage() {
         setError("");
         const data = await getCourses();
         if (isMounted) setCourses(data);
-      } catch (err) {
+      } catch (_) {
         if (isMounted) setError("Failed to load courses. Please try again.");
       } finally {
         if (isMounted) setLoading(false);
@@ -41,39 +41,56 @@ export default function LearnPage() {
   };
 
   return (
-    <main className="mx-auto max-w-5xl space-y-8 sm:space-y-9 p-4 sm:p-6 lg:p-8 animate-fade-up">
-      {/* 1. Header */}
-      <PageTitle
-        badge={isHi ? "सुलभ शिक्षा" : "Accessible Learning"}
-        title={isHi ? "सुलभ शिक्षा और कोर्सेज" : "Inclusive Courses & Upskilling"}
-        subtitle={
-          mode.simpleText
-            ? (isHi ? "व्यावहारिक और आसान कोर्सेज सीखें।" : "Explore practical courses with assistive tools.")
-            : (isHi
-                ? "साइन लैंग्वेज, स्क्रीन रीडर और आसान भाषा में तैयार किए गए कोर्सेज से नए डिजिटल कौशल सीखें।"
-                : "Free self-paced courses designed from the ground up for Indian Sign Language (ISL), screen reader navigation, and audio captions.")
-        }
-      />
+    <main className="mx-auto max-w-5xl space-y-9 p-4 sm:p-6 lg:p-8 animate-fade-up">
+      {/* 1. Header with Feature Highlights */}
+      <section className="space-y-4">
+        <PageTitle
+          badge={isHi ? "सुलभ शिक्षा • एकाक" : "Accessible Learning • Ekak"}
+          title={isHi ? "सुलभ शिक्षा और डिजिटल कौशल" : "Inclusive Courses & Upskilling"}
+          subtitle={
+            mode.simpleText
+              ? (isHi ? "व्यावहारिक और आसान डिजिटल कोर्सेज सीखें।" : "Explore practical courses with assistive tools.")
+              : (isHi
+                  ? "भारतीय सांकेतिक भाषा (ISL), स्क्रीन रीडर और सरल भाषा में तैयार किए गए निःशुल्क कोर्सेज से नए डिजिटल कौशल सीखें।"
+                  : "Free self-paced courses designed from the ground up for Indian Sign Language (ISL), screen reader navigation, and audio captions.")
+          }
+        />
 
-      {/* 2. Enrollment Success Live Announcement */}
+        {/* Learning Perks Banner */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { icon: "🤟", titleHi: "ISL वीडियो ट्रैक", titleEn: "ISL Video Track" },
+            { icon: "🦻", titleHi: "लाइव कैप्शन्स", titleEn: "Captions Included" },
+            { icon: "📜", titleHi: "निःशुल्क सर्टिफिकेट", titleEn: "Free Certificate" },
+            { icon: "⚡", titleHi: "स्व-गति से सीखें", titleEn: "Self-Paced" },
+          ].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-2.5 rounded-2xl border border-stone-200/90 dark:border-stone-800/90 bg-card p-3 shadow-xs">
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-xs font-extrabold text-foreground">{isHi ? item.titleHi : item.titleEn}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 2. Enrollment Success Announcement */}
       {enrolledCourseId && (
         <div
           role="status"
           aria-live="polite"
-          className="flex items-center justify-between gap-3 rounded-2xl border-2 border-emerald-500 bg-emerald-500/10 p-3.5 sm:p-4 font-bold text-foreground"
+          className="flex items-center justify-between gap-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600/15 p-4 font-bold text-foreground shadow-sm animate-fade-up"
         >
-          <div className="flex items-center gap-2.5">
-            <span aria-hidden="true" className="text-xl">🎉</span>
-            <span className="text-sm sm:text-base">
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="text-2xl">🎉</span>
+            <span className="text-sm sm:text-base font-extrabold">
               {isHi
-                ? "आप कोर्स में सफलतापूर्वक नामांकित हो गए हैं! (Enrolled)"
-                : "You have successfully enrolled in this course! Learning materials unlocked."}
+                ? "आप कोर्स में सफलतापूर्वक नामांकित हो गए हैं! वीडियो और अध्ययन सामग्री अनलॉक हो गई है।"
+                : "You have successfully enrolled in this course! All learning materials are unlocked."}
             </span>
           </div>
           <button
             type="button"
             onClick={() => setEnrolledCourseId(null)}
-            className="rounded-lg p-1 text-xs sm:text-sm underline hover:opacity-80 focus-visible:outline focus-visible:outline-2 cursor-pointer"
+            className="rounded-xl px-3 py-1 bg-emerald-700 text-white text-xs font-extrabold hover:bg-emerald-800 cursor-pointer shadow-xs"
           >
             {isHi ? "बंद करें" : "Dismiss"}
           </button>
@@ -85,11 +102,11 @@ export default function LearnPage() {
         <div
           role="status"
           aria-live="polite"
-          className="flex min-h-[14rem] flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-card p-6 text-center seva-card"
+          className="flex min-h-[14rem] flex-col items-center justify-center gap-3 rounded-3xl border-2 border-stone-200/90 dark:border-stone-700/90 bg-card p-8 text-center seva-card"
         >
-          <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-indigo-600 border-t-transparent" />
-          <p className="text-base font-bold text-foreground">
-            {isHi ? "कोर्सेज लोड हो रहे हैं..." : "Loading accessible courses..."}
+          <div className="h-9 w-9 animate-spin rounded-full border-3 border-teal-700 border-t-transparent" />
+          <p className="text-base font-extrabold text-foreground">
+            {isHi ? "सुलभ कोर्सेज लोड हो रहे हैं..." : "Loading accessible courses..."}
           </p>
         </div>
       )}
@@ -98,9 +115,9 @@ export default function LearnPage() {
       {error && !loading && (
         <div
           role="alert"
-          className="rounded-2xl border-2 border-rose-500 bg-rose-500/10 p-5 text-center text-rose-600 dark:text-rose-400 space-y-2.5"
+          className="rounded-3xl border-2 border-rose-500 bg-rose-500/10 p-6 text-center text-rose-700 dark:text-rose-400 space-y-3 shadow-xs"
         >
-          <p className="text-base font-bold">{error}</p>
+          <p className="text-base font-extrabold">{error}</p>
           <BigButton variant="danger" onClick={() => window.location.reload()} className="!min-h-[44px] !text-sm">
             {isHi ? "पुनः प्रयास करें" : "Retry"}
           </BigButton>
@@ -111,10 +128,10 @@ export default function LearnPage() {
       {!loading && !error && courses.length === 0 && (
         <div
           role="status"
-          className="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-card p-8 text-center space-y-2 seva-card"
+          className="rounded-3xl border-2 border-stone-200/90 dark:border-stone-700/90 bg-card p-10 text-center space-y-3 seva-card"
         >
-          <span aria-hidden="true" className="text-3xl">📚</span>
-          <p className="text-lg font-bold">
+          <span aria-hidden="true" className="text-4xl">📚</span>
+          <p className="text-lg font-extrabold">
             {isHi ? "वर्तमान में कोई कोर्स उपलब्ध नहीं है।" : "No courses available right now."}
           </p>
         </div>
@@ -122,12 +139,12 @@ export default function LearnPage() {
 
       {/* 6. Courses Grid */}
       {!loading && !error && courses.length > 0 && (
-        <section aria-label="Available Courses" className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <section aria-label="Available Courses" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => {
             const isEnrolled = enrolledCourseId === course.id;
             const langLabel =
               course.language === "hi"
-                ? (isHi ? "हिन्दी • ISL" : "Hindi • ISL")
+                ? (isHi ? "हिन्दी • ISL सांकेतिक" : "Hindi • ISL Track")
                 : (isHi ? "English • Captions" : "English • Captions");
 
             return (
@@ -135,23 +152,23 @@ export default function LearnPage() {
                 key={course.id}
                 as="article"
                 icon="🎓"
-                accentColor="indigo"
+                accentColor="teal"
                 title={course.title}
                 badge={langLabel}
-                className="flex flex-col justify-between"
+                className="flex flex-col justify-between shadow-sm"
               >
-                <p className="text-sm sm:text-base text-foreground/80 font-normal leading-relaxed">
+                <p className="text-sm text-foreground/85 font-medium leading-relaxed">
                   {course.description}
                 </p>
 
                 {/* Accessible features detail (hidden in Simple Text Mode) */}
-                <div className="optional-detail pt-3 border-t border-slate-200/60 dark:border-slate-800/60 text-xs sm:text-sm font-medium text-foreground/65 space-y-1.5">
-                  <p className="flex items-center gap-1.5">
-                    <span className="text-indigo-600 dark:text-indigo-400 font-bold" aria-hidden="true">✓</span>
+                <div className="optional-detail pt-3 border-t border-stone-200/80 dark:border-stone-800/80 text-xs font-semibold text-foreground/75 space-y-2">
+                  <p className="flex items-center gap-2">
+                    <span className="text-teal-700 dark:text-teal-400 font-extrabold" aria-hidden="true">✓</span>
                     <span>{isHi ? "स्क्रीन रीडर व कीबोर्ड-अनुकूल" : "Screen reader & keyboard accessible"}</span>
                   </p>
-                  <p className="flex items-center gap-1.5">
-                    <span className="text-indigo-600 dark:text-indigo-400 font-bold" aria-hidden="true">✓</span>
+                  <p className="flex items-center gap-2">
+                    <span className="text-teal-700 dark:text-teal-400 font-extrabold" aria-hidden="true">✓</span>
                     <span>{isHi ? "भारतीय सांकेतिक भाषा (ISL)" : "Indian Sign Language (ISL) video track"}</span>
                   </p>
                 </div>
@@ -160,7 +177,7 @@ export default function LearnPage() {
                   <BigButton
                     variant={isEnrolled ? "secondary" : "primary"}
                     onClick={() => handleEnroll(course.id)}
-                    className="w-full"
+                    className="w-full !py-3"
                   >
                     {isEnrolled
                       ? (isHi ? "✓ नामांकित (Continue)" : "✓ Enrolled (Continue)")
