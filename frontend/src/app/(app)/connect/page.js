@@ -230,10 +230,14 @@ function useAudioEngine() {
   return { speak, stop, speaking, activeText, rate, setRate, audioSource };
 }
 
-/* ─── Resilient Microphone & Live Audio Equalizer Hook ─────────────── */
-function useLiveMicrophone() {
+/* ─── Resilient Microphone, Genuine Voice Recorder & Live Equalizer ── */
+function useLiveMicrophone({ barsContainerRef, levelTextRef } = {}) {
   const recRef = useRef(null);
   const mediaStreamRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
+  const activeRecordingStartRef = useRef(0);
+  const lastCapturedTranscriptRef = useRef("");
   const audioCtxRef = useRef(null);
   const analyserRef = useRef(null);
   const animFrameRef = useRef(null);
@@ -241,10 +245,9 @@ function useLiveMicrophone() {
 
   const [listening, setListening] = useState(false);
   const [micActive, setMicActive] = useState(false);
-  const [audioLevel, setAudioLevel] = useState(0); // 0 to 100 volume meter
   const [micNotice, setMicNotice] = useState("");
-  const [isCloudOffline, setIsCloudOffline] = useState(false);
   const [liveText, setLiveText] = useState("");
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [history, setHistory] = useState([
     {
       id: 1,
@@ -255,7 +258,16 @@ function useLiveMicrophone() {
     },
   ]);
 
-  // Clean up audio graph
+  // Real-time recording seconds counter
+  useEffect(() => {
+    if (!listening) return;
+    const timer = setInterval(() => {
+      setRecordingSeconds((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [listening]);
+
+  // Clean up audio graph on stop
   const stopAudioContext = useCallback(() => {
     if (animFrameRef.current) {
       cancelAnimationFrame(animFrameRef.current);
@@ -266,30 +278,41 @@ function useLiveMicrophone() {
       mediaStreamRef.current = null;
     }
     if (audioCtxRef.current && audioCtxRef.current.state !== "closed") {
-      try {
-        audioCtxRef.current.close();
-      } catch (_) {}
+      try { audioCtxRef.current.close(); } catch (_) {}
       audioCtxRef.current = null;
     }
-    setAudioLevel(0);
+    analyserRef.current = null;
+    // Reset bars directly via DOM — zero re-render, zero flicker
+    if (barsContainerRef?.current) {
+      const bars = barsContainerRef.current.children;
+      for (let i = 0; i < bars.length; i++) {
+        bars[i].style.height = "8%";
+        bars[i].style.backgroundColor = "#374151";
+      }
+    }
+    if (levelTextRef?.current) levelTextRef.current.textContent = "0%";
     setMicActive(false);
-  }, []);
+  }, [barsContainerRef, levelTextRef]);
 
-  // Start Web Audio Equalizer (visual proof of working microphone)
-  const startAudioVisualizer = useCallback(async () => {
-    if (typeof window === "undefined" || !navigator.mediaDevices?.getUserMedia) return;
+  // Start Web Audio visualizer — with ctx.resume() and speech band frequency focus
+  const startAudioVisualizer = useCallback(async (existingStream) => {
+    if (typeof window === "undefined" || !navigator.mediaDevices?.getUserMedia) return null;
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = existingStream || await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
       setMicActive(true);
 
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       const ctx = new AudioCtx();
+      if (ctx.state === "suspended") {
+        await ctx.resume();
+      }
       audioCtxRef.current = ctx;
 
       const source = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
-      analyser.fftSize = 64;
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.5;
       source.connect(analyser);
       analyserRef.current = analyser;
 
@@ -298,21 +321,41 @@ function useLiveMicrophone() {
       const tick = () => {
         if (!analyserRef.current) return;
         analyserRef.current.getByteFrequencyData(dataArray);
-        let sum = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-          sum += dataArray[i];
+
+        // Human speech band focus (bins 1 to 32)
+        let speechSum = 0;
+        const activeBins = Math.min(32, dataArray.length);
+        for (let i = 1; i < activeBins; i++) {
+          speechSum += dataArray[i];
         }
-        const avg = sum / dataArray.length;
-        setAudioLevel(Math.min(100, Math.round((avg / 128) * 100)));
+        const speechAvg = speechSum / (activeBins - 1);
+        const level = Math.min(100, Math.round((speechAvg / 75) * 100));
+
+        // Direct DOM update — no setState, zero re-render, zero flicker!
+        if (levelTextRef?.current) {
+          levelTextRef.current.textContent = `${level}%`;
+        }
+        if (barsContainerRef?.current) {
+          const bars = barsContainerRef.current.children;
+          for (let i = 0; i < bars.length; i++) {
+            const seed = (i * 13) % 40;
+            const dynamicScale = level > 4 ? (level * 1.3) : 8;
+            const h = Math.max(8, Math.min(100, Math.round(dynamicScale + (seed * 0.35) - 6)));
+            bars[i].style.height = `${h}%`;
+            bars[i].style.backgroundColor = h > 55 ? "#fbbf24" : level > 4 ? "#2dd4bf" : "#374151";
+          }
+        }
         animFrameRef.current = requestAnimationFrame(tick);
       };
       tick();
+      return stream;
     } catch (_) {
-      setMicNotice("माइक्रोफ़ोन अनुमति आवश्यक है। कृपया ब्राउज़र सेटिंग्स में माइक Allow करें।");
+      setMicNotice("माइक्रोफ़ोन अनुमति आवश्यक है। ब्राउज़र URL बार में 🔒 → Allow Microphone चुनें।");
+      return null;
     }
-  }, []);
+  }, [barsContainerRef, levelTextRef]);
 
-  // Build Web Speech Recognition
+  // Build SpeechRecognition (optional live transcription layer)
   const buildRecognition = useCallback((lang) => {
     if (typeof window === "undefined") return null;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -322,6 +365,7 @@ function useLiveMicrophone() {
     rec.continuous = true;
     rec.interimResults = true;
     rec.lang = lang === "hi" || lang === "hi-IN" ? "hi-IN" : "en-IN";
+    rec.maxAlternatives = 1;
 
     rec.onresult = (e) => {
       let interim = "";
@@ -331,91 +375,134 @@ function useLiveMicrophone() {
         if (e.results[i].isFinal) final += t;
         else interim += t;
       }
-      setLiveText(interim);
-
-      if (final.trim()) {
-        const spoken = final.trim();
-        setLiveText("");
-        setHistory((prev) => [
-          {
-            id: Date.now(),
-            sender: "user",
-            text: spoken,
-            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-          },
-          ...prev,
-        ].slice(0, 12));
+      const recognized = (final || interim).trim();
+      if (recognized) {
+        lastCapturedTranscriptRef.current = recognized;
+        setLiveText(recognized);
       }
     };
 
     rec.onerror = (e) => {
-      if (e.error === "network") {
-        setIsCloudOffline(true);
-        setMicNotice("Google Speech Cloud सर्वर अनुपलब्ध। स्मार्ट वॉइस पैड और ऑफ़लाइन स्पीच सक्रिय है।");
-        // Do not crash the mic active state, the physical mic is still open via Web Audio!
-      } else if (e.error === "not-allowed" || e.error === "permission-denied") {
-        setMicNotice("माइक्रोफ़ोन अनुमति अस्वीकृत है। कृपया ब्राउज़र URL बार में माइक Allow करें।");
+      if (e.error === "not-allowed" || e.error === "permission-denied") {
+        setMicNotice("माइक्रोफ़ोन अनुमति अस्वीकृत। ब्राउज़र URL बार में 🔒 → Allow Microphone चुनें।");
         shouldListenRef.current = false;
         setListening(false);
-      } else if (e.error === "no-speech") {
-        // Continuous mode ignores silence
-      } else {
-        setMicNotice(`सूचना: ${e.error}`);
+        setMicActive(false);
+      } else if (e.error === "audio-capture") {
+        setMicNotice("कोई माइक्रोफ़ोन नहीं मिला। कृपया माइक कनेक्ट करें।");
+        shouldListenRef.current = false;
+        setListening(false);
       }
+      // For network, no-speech: MediaRecorder keeps recording physical voice!
     };
 
     rec.onend = () => {
-      if (shouldListenRef.current && !isCloudOffline) {
-        try {
-          rec.start();
-        } catch (_) {}
-      } else {
-        setListening(false);
+      if (shouldListenRef.current) {
+        setTimeout(() => {
+          if (shouldListenRef.current) {
+            try { rec.start(); } catch (_) {}
+          }
+        }, 200);
       }
     };
 
     return rec;
-  }, [isCloudOffline]);
+  }, []);
 
-  // Start listening with mic & audio visualizer
+  // Start full mic recording session
   const start = useCallback(
     async (lang = "hi") => {
       setMicNotice("");
-      setIsCloudOffline(false);
       setLiveText("");
+      setRecordingSeconds(0);
+      lastCapturedTranscriptRef.current = "";
+      recordedChunksRef.current = [];
+      activeRecordingStartRef.current = Date.now();
       shouldListenRef.current = true;
       setListening(true);
 
-      // Start physical mic visualizer
-      await startAudioVisualizer();
+      // 1. Start audio visualizer from physical mic
+      const stream = await startAudioVisualizer();
+      if (!stream) {
+        shouldListenRef.current = false;
+        setListening(false);
+        return;
+      }
 
-      // Start speech recognition
+      // 2. Start MediaRecorder (Guarantees authentic voice recording)
+      if (typeof window !== "undefined" && window.MediaRecorder) {
+        try {
+          const mimeTypes = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg", ""];
+          const chosenMime = mimeTypes.find((m) => !m || MediaRecorder.isTypeSupported(m)) || "";
+          const mr = chosenMime ? new MediaRecorder(stream, { mimeType: chosenMime }) : new MediaRecorder(stream);
+          mr.ondataavailable = (e) => {
+            if (e.data && e.data.size > 0) {
+              recordedChunksRef.current.push(e.data);
+            }
+          };
+          mediaRecorderRef.current = mr;
+          mr.start(200);
+        } catch (err) {
+          console.warn("MediaRecorder start error:", err);
+        }
+      }
+
+      // 3. Start live speech-to-text recognition
       const rec = buildRecognition(lang);
       if (rec) {
         recRef.current = rec;
-        try {
-          rec.start();
-        } catch (_) {
-          // If already started or network issue
-        }
+        try { rec.start(); } catch (_) {}
       }
     },
     [buildRecognition, startAudioVisualizer]
   );
 
-  // Stop listening
+  // Stop recording — creates audio file, saves to history with playback & transcript
   const stop = useCallback(() => {
     shouldListenRef.current = false;
-    try {
-      recRef.current?.stop();
-    } catch (_) {}
+    try { recRef.current?.stop(); } catch (_) {}
     recRef.current = null;
+
+    const mr = mediaRecorderRef.current;
+    if (mr && mr.state !== "inactive") {
+      mr.onstop = () => {
+        const durationSec = Math.max(1, Math.round((Date.now() - activeRecordingStartRef.current) / 1000));
+        let audioUrl = null;
+        if (recordedChunksRef.current.length > 0) {
+          try {
+            const mime = mr.mimeType || "audio/webm";
+            const blob = new Blob(recordedChunksRef.current, { type: mime });
+            audioUrl = URL.createObjectURL(blob);
+          } catch (_) {}
+        }
+
+        const transcript = lastCapturedTranscriptRef.current?.trim();
+        const displayText = transcript || `🎙️ आवाज रिकॉर्डिंग (${durationSec} सेकंड)`;
+
+        setHistory((prev) => [
+          {
+            id: Date.now(),
+            sender: "user",
+            text: displayText,
+            audioUrl: audioUrl,
+            duration: durationSec,
+            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          },
+          ...prev,
+        ].slice(0, 15));
+        lastCapturedTranscriptRef.current = "";
+      };
+      try { mr.stop(); } catch (_) {}
+      mediaRecorderRef.current = null;
+    }
+
     stopAudioContext();
     setListening(false);
+    setRecordingSeconds(0);
     setLiveText("");
   }, [stopAudioContext]);
 
-  // Add manual phrase to history
+  // Add a phrase to conversation history
   const addTranscriptItem = useCallback((text, sender = "user") => {
     if (!text || !text.trim()) return;
     setHistory((prev) => [
@@ -426,13 +513,15 @@ function useLiveMicrophone() {
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
       ...prev,
-    ].slice(0, 12));
+    ].slice(0, 15));
   }, []);
 
   const clearHistory = useCallback(() => setHistory([]), []);
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
+      shouldListenRef.current = false;
       stop();
     };
   }, [stop]);
@@ -440,10 +529,9 @@ function useLiveMicrophone() {
   return {
     listening,
     micActive,
-    audioLevel,
     micNotice,
-    isCloudOffline,
     liveText,
+    recordingSeconds,
     history,
     start,
     stop,
@@ -700,7 +788,9 @@ export default function ConnectPage() {
 
   // Audio Engine & Mic
   const audio = useAudioEngine();
-  const mic = useLiveMicrophone();
+  const barsContainerRef = useRef(null);
+  const levelTextRef = useRef(null);
+  const mic = useLiveMicrophone({ barsContainerRef, levelTextRef });
 
   /* Speak AAC symbol with high-fidelity audio */
   function handleSpeakAAC(sym) {
@@ -1001,8 +1091,10 @@ export default function ConnectPage() {
 
                 {mic.listening && (
                   <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-700 dark:text-rose-400 text-xs font-black animate-pulse">
-                    <span className="h-2 w-2 rounded-full bg-rose-600" />
-                    <span>माइक चालू है</span>
+                    <span className="h-2 w-2 rounded-full bg-rose-600 animate-ping" />
+                    <span>
+                      🔴 {isHi ? "रिकॉर्डिंग:" : "Recording:"} {Math.floor(mic.recordingSeconds / 60)}:{(mic.recordingSeconds % 60).toString().padStart(2, "0")}
+                    </span>
                   </div>
                 )}
               </div>
@@ -1011,42 +1103,33 @@ export default function ConnectPage() {
               <div className="rounded-2xl border-2 border-stone-200/90 dark:border-stone-800/90 bg-stone-900/90 p-4 text-white space-y-3 shadow-inner">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className={`h-2.5 w-2.5 rounded-full ${mic.micActive ? "bg-emerald-400 animate-ping" : "bg-stone-500"}`} />
+                    <span className={`h-2.5 w-2.5 rounded-full ${mic.listening ? "bg-emerald-400 animate-ping" : "bg-stone-500"}`} />
                     <span className="font-extrabold text-stone-200">
-                      {mic.micActive
-                        ? (isHi ? "माइक सक्रिय (माइक्रोफ़ोन आवाज सुन रहा है)" : "Microphone Active & Hearing Sound")
+                      {mic.listening
+                        ? (isHi ? "माइक व रिकॉर्डर सक्रिय (आवाज सुन रहा है)" : "Microphone & Voice Recorder Active")
                         : (isHi ? "माइक स्टैंडबाय पर है" : "Microphone on Standby")}
                     </span>
                   </div>
                   <span className="text-[0.68rem] font-bold text-stone-400">
-                    ध्वनि स्तर: {mic.audioLevel}%
+                    ध्वनि स्तर: <span ref={levelTextRef}>0%</span>
                   </span>
                 </div>
 
-                {/* Animated 20-bar frequency waveform */}
-                <div className="flex items-end justify-between gap-1 h-12 px-2 py-1 bg-stone-950/70 rounded-xl border border-stone-800">
-                  {Array.from({ length: 24 }).map((_, idx) => {
-                    const seed = (idx * 17) % 100;
-                    const calculatedHeight = mic.listening
-                      ? Math.max(12, Math.min(100, Math.round((mic.audioLevel * 1.2) + ((seed % 30) - 15))))
-                      : 8;
-                    return (
-                      <span
-                        key={idx}
-                        style={{ height: `${calculatedHeight}%` }}
-                        className={`w-full rounded-full transition-all duration-75 ${
-                          mic.listening
-                            ? calculatedHeight > 50
-                              ? "bg-amber-400"
-                              : "bg-teal-400"
-                            : "bg-stone-700"
-                        }`}
-                      />
-                    );
-                  })}
+                {/* Animated 24-bar frequency waveform — zero React re-render, zero flicker */}
+                <div
+                  ref={barsContainerRef}
+                  className="flex items-end justify-between gap-1 h-12 px-2 py-1 bg-stone-950/70 rounded-xl border border-stone-800 overflow-hidden"
+                >
+                  {Array.from({ length: 24 }).map((_, idx) => (
+                    <span
+                      key={idx}
+                      style={{ height: "8%", backgroundColor: "#374151" }}
+                      className="w-full rounded-full transition-all duration-75"
+                    />
+                  ))}
                 </div>
 
-                {/* Live Speech Recognition Transcript Line */}
+                {/* Live Speech Recognition & Recording Status */}
                 <div className="min-h-[44px] flex items-center justify-center text-center">
                   {mic.liveText ? (
                     <p className="text-base font-black text-amber-300 animate-fade-up">
@@ -1055,42 +1138,42 @@ export default function ConnectPage() {
                   ) : (
                     <p className="text-xs text-stone-400 font-medium">
                       {mic.listening
-                        ? (isHi ? "बोलना जारी रखें... वाणी पहचानी जा रही है" : "Listening... Speak clearly")
-                        : (isHi ? "नीचे 'माइक शुरू करें' बटन दबाकर बोलें" : "Click 'Start Microphone' below to speak")}
+                        ? (isHi ? "🔴 आपकी आवाज रिकॉर्ड हो रही है... स्पष्ट बोलें" : "🔴 Recording audio... Speak clearly")
+                        : (isHi ? "माइक चालू करने के लिए नीचे 'आवाज रिकॉर्ड करें' बटन दबाएं" : "Click 'Start Recording' below to speak")}
                     </p>
                   )}
                 </div>
               </div>
 
-              {/* Status / Cloud Offline Notice with Smart Guidance */}
+              {/* Permission denied notice (only for real blocking errors) */}
               {mic.micNotice && (
-                <div className="rounded-2xl border-2 border-amber-500/40 bg-amber-500/10 p-3.5 text-xs space-y-1.5 animate-fade-up">
-                  <div className="flex items-center gap-2 font-black text-amber-800 dark:text-amber-300">
-                    <span>💡</span>
-                    <span>{mic.micNotice}</span>
-                  </div>
-                  {mic.isCloudOffline && (
-                    <p className="text-[0.72rem] text-foreground/80 font-medium leading-relaxed">
-                      Chrome स्पीच क्लाउड नेटवर्क ड्रॉप होने पर भी आप नीचे दिए गए <strong>त्वरित वाणी बटनों</strong> या <strong>टेक्स्ट बॉक्स</strong> से बिना किसी रुकावट के तुरंत शुद्ध हिंदी आवाज सुन सकते हैं।
-                    </p>
-                  )}
+                <div role="alert" className="flex items-center gap-2 rounded-2xl border border-rose-500/40 bg-rose-500/8 px-3.5 py-2.5 text-xs font-bold text-rose-700 dark:text-rose-400 animate-fade-up">
+                  <span className="text-base shrink-0">🔒</span>
+                  <span>{mic.micNotice}</span>
+                  <button
+                    type="button"
+                    onClick={() => mic.start(speechLang)}
+                    className="ml-auto shrink-0 rounded-lg bg-rose-600 text-white px-2.5 py-1 text-[0.65rem] font-black hover:bg-rose-700 cursor-pointer"
+                  >
+                    पुनः प्रयास
+                  </button>
                 </div>
               )}
 
-              {/* Start / Stop Button */}
+              {/* Permanent, Rock-Solid Start / Stop Button — ONLY user can close */}
               <BigButton
                 variant={mic.listening ? "danger" : "primary"}
                 onClick={mic.listening ? mic.stop : () => mic.start(speechLang)}
-                className="w-full !py-3.5 !text-base shadow-md"
+                className="w-full !py-3.5 !text-base shadow-md cursor-pointer"
               >
                 {mic.listening
-                  ? (isHi ? "⏹ माइक बंद करें (Stop Listening)" : "⏹ Stop Microphone")
-                  : (isHi ? "🎤 माइक शुरू करें (Start Microphone)" : "🎤 Start Microphone")}
+                  ? (isHi ? "⏹ रिकॉर्डिंग सुरक्षित करें (Stop & Save Recording)" : "⏹ Stop & Save Voice Recording")
+                  : (isHi ? "🎤 आवाज रिकॉर्ड करें व बोलें (Start Recording)" : "🎤 Record Voice & Transcribe")}
               </BigButton>
 
-              {/* Quick Speech Tap Chips (Immediate Voice & Sound without cloud STT failure) */}
+              {/* Quick Speech Tap Chips */}
               <div className="rounded-2xl border-2 border-stone-200/90 dark:border-stone-800/90 bg-stone-50 dark:bg-stone-900/40 p-3.5 space-y-2.5">
-                <span className="text-[0.68rem] uppercase tracking-widest font-extrabold text-foreground/60 block">
+                <span className="text-[0.68rem] uppercase tracking-widest font-extrabold block text-foreground/60">
                   ⚡ 1-टैप त्वरित वाणी पैड (Tap to Transcribe & Speak):
                 </span>
 
@@ -1166,15 +1249,15 @@ export default function ConnectPage() {
                     </button>
                   </div>
 
-                  <ul className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                  <ul className="space-y-2.5 max-h-[260px] overflow-y-auto pr-1">
                     {mic.history.map((item) => (
                       <li
                         key={item.id}
-                        className="rounded-2xl border border-stone-200/90 dark:border-stone-800/90 bg-card p-3 text-xs space-y-1.5 shadow-xs"
+                        className="rounded-2xl border border-stone-200/90 dark:border-stone-800/90 bg-card p-3 text-xs space-y-2 shadow-xs"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-base">{item.sender === "assistant" ? "🤖" : "👤"}</span>
+                            <span className="text-base">{item.sender === "assistant" ? "🤖" : item.audioUrl ? "🎙️" : "👤"}</span>
                             <span className="font-black text-foreground text-sm leading-snug">{item.text}</span>
                           </div>
                           <div className="flex items-center gap-1.5 shrink-0">
@@ -1189,6 +1272,12 @@ export default function ConnectPage() {
                             </button>
                           </div>
                         </div>
+
+                        {item.audioUrl && (
+                          <div className="pt-1">
+                            <audio controls src={item.audioUrl} className="h-8 w-full rounded-xl bg-stone-100 dark:bg-stone-800 shadow-inner" />
+                          </div>
+                        )}
 
                         {item.translation && (
                           <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 px-2.5 py-1.5 text-xs text-amber-950 dark:text-amber-200 font-bold">
