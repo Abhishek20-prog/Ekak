@@ -1294,7 +1294,7 @@ export default function ConnectPage() {
 
           {/* 3B. Real-Time Bidirectional Translator & High-Fidelity Speech Console */}
           <section aria-labelledby="trans-heading">
-            <Card as="div" accentColor="saffron" className="h-full space-y-4">
+            <Card as="div" accentColor="amber" className="h-full space-y-4">
               <div className="flex items-center justify-between border-b border-stone-200/80 dark:border-stone-800/80 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl bg-amber-600/15 text-amber-900 dark:text-amber-300 border border-amber-600/30 shadow-xs">
@@ -1476,7 +1476,7 @@ export default function ConnectPage() {
               </div>
             </Card>
 
-            <Card as="div" icon="📋" accentColor="saffron" title={isHi ? "अधिकार और योजनाएं" : "Rights & Schemes"}>
+            <Card as="div" icon="📋" accentColor="amber" title={isHi ? "अधिकार और योजनाएं" : "Rights & Schemes"}>
               <p className="text-sm text-foreground/75 font-medium leading-relaxed">
                 {isHi
                   ? "UDID कार्ड, सरकारी दिव्यांग पेंशन योजनाएं और कानूनी अधिकारों की सरल व सुगम जानकारी।"

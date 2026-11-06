@@ -250,7 +250,7 @@ export default function HomePage() {
         <Card
           as="section"
           icon="💬"
-          accentColor="saffron"
+          accentColor="amber"
           title={
             mode.simpleText
               ? (isHi ? "संवाद (Connect)" : "Connect")
