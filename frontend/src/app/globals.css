@@ -1,54 +1,54 @@
 @import "tailwindcss";
 
 /* ===== EKAK (एकक) — Design System ===== */
-/* Rich, engaging, attractive, accessible — inspired by Indian heritage & modern inclusion */
+/* Royal Blue & Golden Amber theme inspired by the Ekak Caring Hands & Sprout emblem */
 
 :root {
-  /* Core surfaces — warm ivory & sandalwood tones, not sterile plain white */
-  --background: #fbf8f3;
-  --foreground: #1c1815;
+  /* Core surfaces — crisp, modern & clean */
+  --background: #f8fafc;
+  --foreground: #0f172a;
   --card: #ffffff;
-  --card-foreground: #1c1815;
-  --border: #e6ded4;
-  --ring: #0d7377;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --ring: #194db8;
 
-  /* Primary Brand — Deep Forest Teal (Calm, Dignity, Inclusivity) */
-  --seva-primary: #0d7377;
-  --seva-primary-light: #14968a;
-  --seva-primary-dark: #075053;
-  --seva-primary-bg: rgba(13,115,119,0.08);
+  /* Primary Brand — Royal Cobalt Blue (from Logo Hands: Trust, Dignity, Support) */
+  --seva-primary: #194db8;
+  --seva-primary-light: #2563eb;
+  --seva-primary-dark: #133d94;
+  --seva-primary-bg: rgba(25, 77, 184, 0.08);
 
-  /* Vibrant Accent — Radiant Saffron & Terracotta (Energy, Warmth, Heritage) */
-  --seva-accent: #c8531e;
-  --seva-accent-light: #e67035;
-  --seva-accent-dark: #a03b0d;
-  --seva-accent-bg: rgba(200,83,30,0.09);
+  /* Vibrant Accent — Radiant Golden Sunflower (from Logo Sprout: Hope, Growth, Energy) */
+  --seva-accent: #f59e0b;
+  --seva-accent-light: #fbbf24;
+  --seva-accent-dark: #d97706;
+  --seva-accent-bg: rgba(245, 158, 11, 0.12);
 
-  /* Supporting Emerald & Golden Olive (Growth, Career, Empowerment) */
-  --seva-success: #2b7a4b;
-  --seva-success-light: #3e9f64;
-  --seva-success-bg: rgba(43,122,75,0.09);
+  /* Supporting Emerald & Sage (Inclusion & Success) */
+  --seva-success: #10b981;
+  --seva-success-light: #34d399;
+  --seva-success-bg: rgba(16, 185, 129, 0.09);
 
-  /* Royal Amethyst & Violet (Creativity & Assistive Technology) */
-  --seva-royal: #6c47b5;
-  --seva-royal-light: #8964d4;
-  --seva-royal-bg: rgba(108,71,181,0.09);
+  /* Royal Indigo & Violet (Assistive AI & Tech) */
+  --seva-royal: #6366f1;
+  --seva-royal-light: #818cf8;
+  --seva-royal-bg: rgba(99, 102, 241, 0.09);
 
   /* Alert Crimson */
-  --seva-danger: #c23934;
+  --seva-danger: #ef4444;
 
   /* Rich multi-stop gradients */
-  --grad-primary: linear-gradient(135deg, #0d7377 0%, #128286 50%, #159b8e 100%);
-  --grad-accent: linear-gradient(135deg, #c8531e 0%, #db652d 50%, #f07b42 100%);
-  --grad-success: linear-gradient(135deg, #2b7a4b 0%, #35915a 50%, #46ac6d 100%);
-  --grad-royal: linear-gradient(135deg, #6c47b5 0%, #7d57cb 50%, #946ee4 100%);
-  --grad-hero: linear-gradient(135deg, rgba(13,115,119,0.12) 0%, rgba(200,83,30,0.08) 50%, rgba(108,71,181,0.06) 100%);
+  --grad-primary: linear-gradient(135deg, #194db8 0%, #2563eb 50%, #3b82f6 100%);
+  --grad-accent: linear-gradient(135deg, #f59e0b 0%, #fbb024 50%, #fcd34d 100%);
+  --grad-success: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+  --grad-royal: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%);
+  --grad-hero: linear-gradient(135deg, rgba(25, 77, 184, 0.12) 0%, rgba(245, 158, 11, 0.09) 50%, rgba(99, 102, 241, 0.06) 100%);
 
   /* Rich Layered Elevation Shadows */
-  --shadow-card: 0 2px 6px -1px rgba(28,24,21,0.06), 0 1px 4px -1px rgba(28,24,21,0.04);
-  --shadow-card-hover: 0 14px 30px -6px rgba(13,115,119,0.18), 0 6px 14px -3px rgba(200,83,30,0.10);
-  --shadow-btn: 0 4px 14px -1px rgba(13,115,119,0.30);
-  --shadow-btn-hover: 0 8px 22px -2px rgba(13,115,119,0.42);
+  --shadow-card: 0 2px 8px -1px rgba(15, 23, 42, 0.06), 0 1px 4px -1px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 14px 30px -6px rgba(25, 77, 184, 0.18), 0 6px 14px -3px rgba(245, 158, 11, 0.12);
+  --shadow-btn: 0 4px 14px -1px rgba(25, 77, 184, 0.32);
+  --shadow-btn-hover: 0 8px 22px -2px rgba(25, 77, 184, 0.46);
 }
 
 @theme inline {
@@ -63,33 +63,33 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #100e0d;
-    --foreground: #f5efe8;
-    --card: #191614;
-    --card-foreground: #f5efe8;
-    --border: #2f2824;
-    --ring: #1dbfb2;
+    --background: #0b1120;
+    --foreground: #f8fafc;
+    --card: #131c31;
+    --card-foreground: #f8fafc;
+    --border: #1e293b;
+    --ring: #3b82f6;
 
-    --seva-primary: #1dbfb2;
-    --seva-primary-light: #34d8cb;
-    --seva-primary-dark: #0d7377;
-    --seva-primary-bg: rgba(29,191,178,0.14);
+    --seva-primary: #3b82f6;
+    --seva-primary-light: #60a5fa;
+    --seva-primary-dark: #194db8;
+    --seva-primary-bg: rgba(59, 130, 246, 0.15);
 
-    --seva-accent: #f07b42;
-    --seva-accent-light: #fa935f;
-    --seva-accent-bg: rgba(240,123,66,0.14);
+    --seva-accent: #fbbf24;
+    --seva-accent-light: #fde047;
+    --seva-accent-bg: rgba(251, 191, 36, 0.15);
 
-    --seva-success: #46ac6d;
-    --seva-success-bg: rgba(70,172,109,0.14);
+    --seva-success: #34d399;
+    --seva-success-bg: rgba(52, 211, 153, 0.15);
 
-    --seva-royal: #946ee4;
-    --seva-royal-bg: rgba(148,110,228,0.14);
+    --seva-royal: #818cf8;
+    --seva-royal-bg: rgba(129, 140, 248, 0.15);
 
-    --grad-hero: linear-gradient(135deg, rgba(29,191,178,0.12) 0%, rgba(240,123,66,0.10) 50%, rgba(148,110,228,0.08) 100%);
+    --grad-hero: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(251, 191, 36, 0.10) 50%, rgba(30, 58, 138, 0.20) 100%);
     --shadow-card: 0 2px 8px 0 rgba(0,0,0,0.40);
-    --shadow-card-hover: 0 16px 32px -4px rgba(29,191,178,0.22), 0 8px 16px -2px rgba(0,0,0,0.45);
-    --shadow-btn: 0 4px 14px 0 rgba(29,191,178,0.35);
-    --shadow-btn-hover: 0 8px 22px 0 rgba(29,191,178,0.50);
+    --shadow-card-hover: 0 16px 32px -4px rgba(59, 130, 246, 0.22), 0 8px 16px -2px rgba(0,0,0,0.45);
+    --shadow-btn: 0 4px 14px 0 rgba(59, 130, 246, 0.35);
+    --shadow-btn-hover: 0 8px 22px 0 rgba(59, 130, 246, 0.50);
   }
 }
 
@@ -131,17 +131,17 @@ body::before {
   pointer-events: none;
   z-index: -1;
   background-image:
-    radial-gradient(circle at 15% 10%, rgba(13,115,119,0.09) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(200,83,30,0.07) 0%, transparent 40%),
-    radial-gradient(circle at 50% 85%, rgba(108,71,181,0.06) 0%, transparent 50%);
+    radial-gradient(circle at 15% 10%, rgba(25,77,184,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(245,158,11,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(99,102,241,0.06) 0%, transparent 50%);
 }
 
 @media (prefers-color-scheme: dark) {
   body::before {
     background-image:
-      radial-gradient(circle at 15% 10%, rgba(29,191,178,0.10) 0%, transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(240,123,66,0.08) 0%, transparent 40%),
-      radial-gradient(circle at 50% 85%, rgba(148,110,228,0.08) 0%, transparent 50%);
+      radial-gradient(circle at 15% 10%, rgba(59,130,246,0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(251,191,36,0.10) 0%, transparent 40%),
+      radial-gradient(circle at 50% 85%, rgba(129,140,248,0.08) 0%, transparent 50%);
   }
 }
 
@@ -196,40 +196,40 @@ html[lang="hi"] h3 {
 /* Rich Hero Banner styling */
 .hero-banner {
   background: var(--grad-hero);
-  border: 1px solid rgba(13,115,119,0.18);
-  box-shadow: 0 8px 24px -6px rgba(13,115,119,0.12);
+  border: 1px solid rgba(25,77,184,0.18);
+  box-shadow: 0 8px 24px -6px rgba(25,77,184,0.12);
   backdrop-filter: blur(12px);
 }
 
 /* ===== Glassmorphism header/nav (legacy) ===== */
 .glass {
-  background: rgba(251,248,243,0.85);
+  background: rgba(248,250,252,0.85);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border-bottom: 1px solid rgba(230,222,212,0.8);
+  border-bottom: 1px solid rgba(226,232,240,0.8);
 }
 @media (prefers-color-scheme: dark) {
   .glass {
-    background: rgba(16,14,13,0.88);
-    border-bottom: 1px solid rgba(47,40,36,0.7);
+    background: rgba(11,17,32,0.88);
+    border-bottom: 1px solid rgba(30,41,59,0.7);
   }
 }
 
 /* ===== Ekak Rich Header ===== */
 .ekak-header {
-  background: rgba(251,248,243,0.90);
+  background: rgba(248,250,252,0.92);
   backdrop-filter: blur(28px) saturate(210%);
   -webkit-backdrop-filter: blur(28px) saturate(210%);
-  border-bottom: 1px solid rgba(230,222,212,0.65);
+  border-bottom: 1px solid rgba(226,232,240,0.80);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.70) inset,
-    0 6px 24px -6px rgba(13,115,119,0.13),
+    0 1px 0 rgba(255,255,255,0.80) inset,
+    0 6px 24px -6px rgba(25,77,184,0.13),
     0 1px 6px rgba(0,0,0,0.05);
 }
 @media (prefers-color-scheme: dark) {
   .ekak-header {
-    background: rgba(16,14,13,0.94);
-    border-bottom: 1px solid rgba(47,40,36,0.80);
+    background: rgba(11,17,32,0.94);
+    border-bottom: 1px solid rgba(30,41,59,0.80);
     box-shadow:
       0 1px 0 rgba(255,255,255,0.05) inset,
       0 6px 24px -4px rgba(0,0,0,0.55);
@@ -248,7 +248,7 @@ html[lang="hi"] h3 {
   height: 3px;
   background: linear-gradient(
     90deg,
-    #0d7377, #14968a, #f59e0b, #c8531e, #6c47b5, #1dbfb2, #0d7377
+    #194db8, #2563eb, #f59e0b, #fbbf24, #6366f1, #3b82f6, #194db8
   );
   background-size: 300% 100%;
   animation: headerGlow 6s ease infinite;
@@ -256,10 +256,10 @@ html[lang="hi"] h3 {
 
 /* Settings button active glow state */
 .ekak-settings-active {
-  background: linear-gradient(135deg, #0d7377, #128286 55%, #159b8e) !important;
+  background: linear-gradient(135deg, #194db8, #2563eb 55%, #3b82f6) !important;
   box-shadow:
-    0 4px 16px -2px rgba(13,115,119,0.45),
-    0 0 0 3px rgba(13,115,119,0.18);
+    0 4px 16px -2px rgba(25,77,184,0.45),
+    0 0 0 3px rgba(25,77,184,0.18);
 }
 
 /* ===== Ekak Floating Bottom Nav ===== */
@@ -277,7 +277,7 @@ html[lang="hi"] h3 {
   box-shadow:
     0 -2px 0 rgba(255,255,255,0.5) inset,
     0 2px 0 rgba(0,0,0,0.03) inset,
-    0 8px 32px -4px rgba(13,115,119,0.18),
+    0 8px 32px -4px rgba(25,77,184,0.18),
     0 4px 12px -2px rgba(0,0,0,0.12),
     0 0 0 1px rgba(255,255,255,0.30);
 }
@@ -365,9 +365,9 @@ html[lang="hi"] h3 {
 
 /* Pulse Glow Effect */
 @keyframes pulseGlow {
-  0% { box-shadow: 0 0 0 0 rgba(200,83,30,0.5); }
-  70% { box-shadow: 0 0 0 12px rgba(200,83,30,0); }
-  100% { box-shadow: 0 0 0 0 rgba(200,83,30,0); }
+  0% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+  70% { box-shadow: 0 0 0 12px rgba(245,158,11,0); }
+  100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
 }
 .pulse-glow {
   animation: pulseGlow 1.8s infinite;
@@ -416,7 +416,7 @@ html[data-contrast="high"] select {
 }
 html[data-contrast="high"] .btn-primary,
 html[data-contrast="high"] .bg-gradient-to-r,
-html[data-contrast="high"] [class*="from-teal"],
+html[data-contrast="high"] [class*="from-blue"],
 html[data-contrast="high"] [class*="seva-selected"] {
   background: #ffff00 !important;
   color: #000000 !important;
@@ -441,11 +441,11 @@ html[data-contrast="high"] :focus-visible {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(13,115,119,0.30);
+  background: rgba(25,77,184,0.30);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(13,115,119,0.55);
+  background: rgba(25,77,184,0.55);
 }
 
 /* ===== Entrance Animations ===== */

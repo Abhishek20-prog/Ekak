@@ -59,7 +59,7 @@ export default function WorkPage() {
   };
 
   return (
-    <main className="mx-auto max-w-5xl space-y-8 sm:space-y-9 p-4 sm:p-6 lg:p-8 animate-fade-up">
+    <main className="mx-auto max-w-6xl space-y-8 p-4 sm:p-6 lg:p-8 animate-fade-up">
       {/* 1. Header */}
       <PageTitle
         badge={isHi ? "समान रोजगार • एकाक" : "Inclusive Careers • Ekak"}
@@ -68,8 +68,8 @@ export default function WorkPage() {
           mode.simpleText
             ? (isHi ? "सत्यापित सुलभ नौकरियां खोजें।" : "Find verified accessible job openings.")
             : (isHi
-                ? "सत्यापित नियोक्ताओं के पास ऐसी नौकरियां जहां स्क्रीन रीडर, लचीले घंटे और सुलभ कार्यस्थल उपकरण उपलब्ध हैं।"
-                : "Explore verified employer openings offering screen reader support, flexible remote work, and workplace accommodations.")
+              ? "सत्यापित नियोक्ताओं के पास ऐसी नौकरियां जहां स्क्रीन रीडर, लचीले घंटे और सुलभ कार्यस्थल उपकरण उपलब्ध हैं।"
+              : "Explore verified employer openings offering screen reader support, flexible remote work, and workplace accommodations.")
         }
       />
 
@@ -78,11 +78,11 @@ export default function WorkPage() {
         <div
           role="status"
           aria-live="polite"
-          className="flex items-center justify-between gap-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600/10 p-3.5 sm:p-4 font-bold text-foreground"
+          className="flex items-center justify-between gap-3 rounded-2xl border-2 border-emerald-600 bg-emerald-600/10 p-4 font-bold text-foreground shadow-sm animate-fade-up"
         >
           <div className="flex items-center gap-2.5">
             <span aria-hidden="true" className="text-xl">🎉</span>
-            <span className="text-sm sm:text-base">
+            <span className="text-sm sm:text-base font-extrabold">
               {isHi
                 ? "आपका आवेदन सफलतापूर्वक भेज दिया गया है! कंपनी जल्द संपर्क करेगी।"
                 : "Application submitted successfully! The inclusive employer will reach out shortly."}
@@ -91,7 +91,7 @@ export default function WorkPage() {
           <button
             type="button"
             onClick={() => setAppliedJobId(null)}
-            className="rounded-lg p-1 text-xs sm:text-sm underline hover:opacity-80 focus-visible:outline focus-visible:outline-2 cursor-pointer"
+            className="rounded-xl px-3 py-1 bg-emerald-700 text-white text-xs font-extrabold hover:bg-emerald-800 cursor-pointer shadow-xs shrink-0"
           >
             {isHi ? "बंद करें" : "Dismiss"}
           </button>
@@ -127,12 +127,12 @@ export default function WorkPage() {
 
       {/* 5. Accessibility Tags Filter Bar */}
       {!loading && !error && jobs.length > 0 && (
-        <section aria-label="Job Accessibility Filters" className="space-y-2.5">
+        <section aria-label="Job Accessibility Filters" className="space-y-3">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-xs font-extrabold uppercase tracking-wider text-foreground/70">
               {isHi ? "सुलभता सुविधा अनुसार फ़िल्टर करें:" : "Filter by Accessibility Accommodation:"}
             </h2>
-            <span role="status" aria-live="polite" className="text-xs font-semibold text-foreground/60">
+            <span role="status" aria-live="polite" className="text-xs font-bold text-foreground/60">
               {isHi
                 ? `${filteredJobs.length} नौकरियां उपलब्ध`
                 : `${filteredJobs.length} ${filteredJobs.length === 1 ? "role" : "roles"} found`}
@@ -152,11 +152,10 @@ export default function WorkPage() {
                   type="button"
                   onClick={() => setSelectedTag(tag)}
                   aria-pressed={isSelected}
-                  className={`inline-flex min-h-[38px] items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
-                    isSelected
-                      ? "bg-teal-700 text-white shadow-xs"
+                  className={`inline-flex min-h-[38px] items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-bold transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 ${isSelected
+                      ? "bg-blue-700 text-white shadow-xs"
                       : "border border-stone-300 dark:border-stone-700 bg-card text-foreground/80 hover:bg-current/10 hover:border-current"
-                  }`}
+                    }`}
                 >
                   <span className="text-xs">{tag === "All" ? "🌟" : "🏷️"}</span>
                   <span>{tag === "All" ? (isHi ? "सभी (All)" : "All Accommodations") : tag}</span>
@@ -187,9 +186,13 @@ export default function WorkPage() {
 
       {/* 7. Jobs Grid */}
       {!loading && !error && filteredJobs.length > 0 && (
-        <section aria-label="Job Postings" className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <section aria-label="Job Postings" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredJobs.map((job) => {
             const isApplied = appliedJobId === job.id;
+            const isRemote = (job.location || "").toLowerCase().includes("remote");
+            const locBadge = isRemote
+              ? (isHi ? "🌐 रिमोट" : "🌐 Remote")
+              : (isHi ? "📍 हाइब्रिड" : "📍 Hybrid");
 
             return (
               <Card
@@ -198,33 +201,34 @@ export default function WorkPage() {
                 icon="💼"
                 accentColor="olive"
                 title={job.title}
-                badge={job.location}
-                className="flex flex-col justify-between"
+                badge={locBadge}
+                className="h-full shadow-sm"
               >
                 {/* Company & Location Info */}
-                <div className="space-y-0.5">
-                  <p className="text-base font-bold text-foreground flex items-center gap-1.5">
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-bold text-foreground/80">
+                  <span className="flex items-center gap-1.5 font-black text-foreground text-sm">
                     <span aria-hidden="true">🏢</span>
                     <span>{job.company}</span>
-                  </p>
-                  <p className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+                  </span>
+                  <span className="text-foreground/30">•</span>
+                  <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-extrabold">
                     <span aria-hidden="true">📍</span>
                     <span>{job.location}</span>
-                  </p>
+                  </span>
                 </div>
 
                 {/* Prominently Featured Accessibility Tags */}
-                <div className="space-y-1.5 pt-1.5">
+                <div className="space-y-2 pt-2 border-t border-stone-200/80 dark:border-stone-800/80">
                   <p className="text-[0.68rem] font-extrabold uppercase tracking-wider text-foreground/60">
-                    {isHi ? "सुलभता सुविधाएं (Accommodations):" : "Accessibility Accommodations:"}
+                    {isHi ? "सुलभता सुविधाएं व उपकरण:" : "Accommodations & Assistive Tech:"}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {(job.accessibilityTags || []).map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center gap-1 rounded-lg border border-emerald-600/30 bg-emerald-600/10 px-2.5 py-0.5 text-xs font-bold text-foreground"
+                        className="inline-flex items-center gap-1 rounded-xl border border-emerald-600/30 bg-emerald-600/10 px-2.5 py-1 text-xs font-bold text-foreground shadow-xs"
                       >
-                        <span aria-hidden="true" className="text-emerald-700 dark:text-emerald-400 font-bold">✓</span>
+                        <span aria-hidden="true" className="text-emerald-700 dark:text-emerald-400 font-black">✓</span>
                         <span>{tag}</span>
                       </span>
                     ))}
@@ -232,11 +236,11 @@ export default function WorkPage() {
                 </div>
 
                 {/* Action CTA */}
-                <div className="pt-4 mt-auto">
+                <div className="pt-3 mt-auto">
                   <BigButton
                     variant={isApplied ? "secondary" : "primary"}
                     onClick={() => handleApply(job.id)}
-                    className="w-full"
+                    className="w-full !py-2.5 !text-sm"
                   >
                     {isApplied
                       ? (isHi ? "✓ आवेदन भेजा गया" : "✓ Applied")

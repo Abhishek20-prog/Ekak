@@ -41,7 +41,7 @@ export default function LearnPage() {
   };
 
   return (
-    <main className="mx-auto max-w-5xl space-y-9 p-4 sm:p-6 lg:p-8 animate-fade-up">
+    <main className="mx-auto max-w-6xl space-y-8 p-4 sm:p-6 lg:p-8 animate-fade-up">
       {/* 1. Header with Feature Highlights */}
       <section className="space-y-4">
         <PageTitle
@@ -51,8 +51,8 @@ export default function LearnPage() {
             mode.simpleText
               ? (isHi ? "व्यावहारिक और आसान डिजिटल कोर्सेज सीखें।" : "Explore practical courses with assistive tools.")
               : (isHi
-                  ? "भारतीय सांकेतिक भाषा (ISL), स्क्रीन रीडर और सरल भाषा में तैयार किए गए निःशुल्क कोर्सेज से नए डिजिटल कौशल सीखें।"
-                  : "Free self-paced courses designed from the ground up for Indian Sign Language (ISL), screen reader navigation, and audio captions.")
+                ? "भारतीय सांकेतिक भाषा (ISL), स्क्रीन रीडर और सरल भाषा में तैयार किए गए निःशुल्क कोर्सेज से नए डिजिटल कौशल सीखें।"
+                : "Free self-paced courses designed from the ground up for Indian Sign Language (ISL), screen reader navigation, and audio captions.")
           }
         />
 
@@ -65,8 +65,8 @@ export default function LearnPage() {
             { icon: "⚡", titleHi: "स्व-गति से सीखें", titleEn: "Self-Paced" },
           ].map((item, idx) => (
             <div key={idx} className="flex items-center gap-2.5 rounded-2xl border border-stone-200/90 dark:border-stone-800/90 bg-card p-3 shadow-xs">
-              <span className="text-xl">{item.icon}</span>
-              <span className="text-xs font-extrabold text-foreground">{isHi ? item.titleHi : item.titleEn}</span>
+              <span className="text-xl shrink-0">{item.icon}</span>
+              <span className="text-xs font-black text-foreground truncate">{isHi ? item.titleHi : item.titleEn}</span>
             </div>
           ))}
         </div>
@@ -90,7 +90,7 @@ export default function LearnPage() {
           <button
             type="button"
             onClick={() => setEnrolledCourseId(null)}
-            className="rounded-xl px-3 py-1 bg-emerald-700 text-white text-xs font-extrabold hover:bg-emerald-800 cursor-pointer shadow-xs"
+            className="rounded-xl px-3 py-1 bg-emerald-700 text-white text-xs font-extrabold hover:bg-emerald-800 cursor-pointer shadow-xs shrink-0"
           >
             {isHi ? "बंद करें" : "Dismiss"}
           </button>
@@ -104,7 +104,7 @@ export default function LearnPage() {
           aria-live="polite"
           className="flex min-h-[14rem] flex-col items-center justify-center gap-3 rounded-3xl border-2 border-stone-200/90 dark:border-stone-700/90 bg-card p-8 text-center seva-card"
         >
-          <div className="h-9 w-9 animate-spin rounded-full border-3 border-teal-700 border-t-transparent" />
+          <div className="h-9 w-9 animate-spin rounded-full border-3 border-blue-700 border-t-transparent" />
           <p className="text-base font-extrabold text-foreground">
             {isHi ? "सुलभ कोर्सेज लोड हो रहे हैं..." : "Loading accessible courses..."}
           </p>
@@ -139,7 +139,7 @@ export default function LearnPage() {
 
       {/* 6. Courses Grid */}
       {!loading && !error && courses.length > 0 && (
-        <section aria-label="Available Courses" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section aria-label="Available Courses" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => {
             const isEnrolled = enrolledCourseId === course.id;
             const langLabel =
@@ -152,35 +152,47 @@ export default function LearnPage() {
                 key={course.id}
                 as="article"
                 icon="🎓"
-                accentColor="teal"
+                accentColor="blue"
                 title={course.title}
                 badge={langLabel}
-                className="flex flex-col justify-between shadow-sm"
+                className="h-full shadow-sm"
               >
-                <p className="text-sm text-foreground/85 font-medium leading-relaxed">
+                {/* Course Metadata Strip */}
+                <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-foreground/70">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-stone-100 dark:bg-stone-800/80 px-2 py-0.5 text-[0.7rem]">
+                    ⏱️ {isHi ? "4 सप्ताह" : "4 Weeks"}
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-md bg-blue-500/10 text-blue-800 dark:text-blue-300 px-2 py-0.5 text-[0.7rem]">
+                    📜 {isHi ? "निःशुल्क" : "Free"}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-foreground/85 font-medium leading-relaxed">
                   {course.description}
                 </p>
 
                 {/* Accessible features detail (hidden in Simple Text Mode) */}
                 <div className="optional-detail pt-3 border-t border-stone-200/80 dark:border-stone-800/80 text-xs font-semibold text-foreground/75 space-y-2">
                   <p className="flex items-center gap-2">
-                    <span className="text-teal-700 dark:text-teal-400 font-extrabold" aria-hidden="true">✓</span>
+                    <span className="text-blue-700 dark:text-blue-400 font-extrabold shrink-0" aria-hidden="true">✓</span>
                     <span>{isHi ? "स्क्रीन रीडर व कीबोर्ड-अनुकूल" : "Screen reader & keyboard accessible"}</span>
                   </p>
                   <p className="flex items-center gap-2">
-                    <span className="text-teal-700 dark:text-teal-400 font-extrabold" aria-hidden="true">✓</span>
+                    <span className="text-blue-700 dark:text-blue-400 font-extrabold shrink-0" aria-hidden="true">✓</span>
                     <span>{isHi ? "भारतीय सांकेतिक भाषा (ISL)" : "Indian Sign Language (ISL) video track"}</span>
                   </p>
                 </div>
 
-                <div className="pt-4 mt-auto">
+                {/* Bottom CTA Button */}
+                <div className="pt-3 mt-auto">
                   <BigButton
                     variant={isEnrolled ? "secondary" : "primary"}
                     onClick={() => handleEnroll(course.id)}
-                    className="w-full !py-3"
+                    className="w-full !py-2.5 !text-sm"
                   >
                     {isEnrolled
-                      ? (isHi ? "✓ नामांकित (Continue)" : "✓ Enrolled (Continue)")
+                      ? (isHi ? "✓ नामांकित (जारी रखें)" : "✓ Enrolled (Continue)")
                       : (isHi ? "कोर्स शुरू करें →" : "Start Course →")}
                   </BigButton>
                 </div>

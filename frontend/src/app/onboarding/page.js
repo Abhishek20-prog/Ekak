@@ -49,7 +49,7 @@ export default function OnboardingPage() {
       {/* Brand Header */}
       <div className="flex items-center justify-between gap-4 border-b border-stone-200/80 dark:border-stone-800/80 pb-5">
         <EkakLogo size="md" />
-        <span className="text-xs font-bold px-3 py-1 rounded-full border border-teal-600/30 bg-teal-600/10 text-teal-800 dark:text-teal-300">
+        <span className="text-xs font-bold px-3 py-1 rounded-full border border-blue-600/30 bg-blue-600/10 text-blue-800 dark:text-blue-300">
           Personalized Setup
         </span>
       </div>
@@ -71,7 +71,7 @@ export default function OnboardingPage() {
               Select all that apply. Ekak seamlessly combines multiple assistive features.
             </p>
             {selected.length > 0 && (
-              <span className="text-xs font-bold text-teal-700 dark:text-teal-400 bg-teal-600/10 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-bold text-blue-700 dark:text-blue-400 bg-blue-600/10 px-2.5 py-1 rounded-lg">
                 {selected.length} {selected.length === 1 ? "option" : "options"} selected
               </span>
             )}
@@ -93,11 +93,11 @@ export default function OnboardingPage() {
                   aria-label={`${d.label} — ${d.hint}`}
                   onClick={() => toggle(d.id)}
                   className={`group relative flex min-h-[9rem] flex-col items-center justify-center gap-1.5 rounded-3xl border-2 p-5 text-center cursor-pointer transition-all duration-200
-                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-teal-600
+                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-blue-600
                     active:scale-95
                     ${isChecked
-                      ? "border-teal-700 bg-teal-700 text-white shadow-md shadow-teal-900/20"
-                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-teal-600 hover:shadow-xs"
+                      ? "border-blue-700 bg-blue-700 text-white shadow-md shadow-blue-900/20"
+                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-blue-600 hover:shadow-xs"
                     }`}
                 >
                   <span className="text-4xl leading-none transition-transform group-hover:scale-110" aria-hidden="true">
@@ -106,7 +106,7 @@ export default function OnboardingPage() {
                   <span className="text-base sm:text-lg font-bold tracking-tight">
                     {d.label}
                   </span>
-                  <span className={`text-xs sm:text-sm font-medium ${isChecked ? "text-teal-100" : "text-foreground/70"}`}>
+                  <span className={`text-xs sm:text-sm font-medium ${isChecked ? "text-blue-100" : "text-foreground/70"}`}>
                     {d.hint}
                   </span>
                   
@@ -152,11 +152,11 @@ export default function OnboardingPage() {
                   aria-checked={isChecked}
                   onClick={() => setLanguage(l.id)}
                   className={`group relative flex min-h-[7.5rem] flex-col items-center justify-center gap-1 rounded-3xl border-2 p-5 text-center cursor-pointer transition-all duration-200
-                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-teal-600
+                    focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-blue-600
                     active:scale-95
                     ${isChecked
-                      ? "border-teal-700 bg-teal-700 text-white shadow-md shadow-teal-900/20"
-                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-teal-600 hover:shadow-xs"
+                      ? "border-blue-700 bg-blue-700 text-white shadow-md shadow-blue-900/20"
+                      : "border-stone-200/90 dark:border-stone-700/90 bg-card text-foreground hover:border-blue-600 hover:shadow-xs"
                     }`}
                 >
                   <span className="text-2xl leading-none" aria-hidden="true">
@@ -165,7 +165,7 @@ export default function OnboardingPage() {
                   <span className="text-lg font-bold tracking-tight">
                     {l.label}
                   </span>
-                  <span className={`text-xs font-medium ${isChecked ? "text-teal-100" : "text-foreground/70"}`}>
+                  <span className={`text-xs font-medium ${isChecked ? "text-blue-100" : "text-foreground/70"}`}>
                     {l.sublabel}
                   </span>
                   {isChecked && (

@@ -27,7 +27,7 @@ export default function SettingsPage() {
     return (
       <main className="mx-auto max-w-4xl p-6 sm:p-10">
         <div role="status" aria-live="polite" className="flex items-center gap-3">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-teal-700 border-t-transparent" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-700 border-t-transparent" />
           <p className="text-lg font-bold">Loading settings...</p>
         </div>
       </main>
@@ -141,7 +141,7 @@ export default function SettingsPage() {
 
       {/* 3. Font Size Control (A- / A+) */}
       <section aria-labelledby="font-scale-heading">
-        <Card as="div" accentColor="teal" className="space-y-4">
+        <Card as="div" accentColor="blue" className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-stone-200/80 dark:border-stone-800/80 pb-3.5">
             <div className="flex items-center gap-2.5">
               <span aria-hidden="true" className="text-2xl">🔤</span>
@@ -155,7 +155,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-teal-600/30 bg-teal-600/10 px-3 py-1 font-bold text-xs sm:text-sm text-teal-800 dark:text-teal-300">
+            <div className="rounded-xl border border-blue-600/30 bg-blue-600/10 px-3 py-1 font-bold text-xs sm:text-sm text-blue-800 dark:text-blue-300">
               {isHi ? currentScaleObj.labelHi : currentScaleObj.labelEn}
             </div>
           </div>
@@ -219,10 +219,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => handleLanguageChange("en")}
-              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
+              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 ${
                 language === "en"
-                  ? "border-teal-700 bg-teal-700/10 text-foreground shadow-xs"
-                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-teal-600 bg-card"
+                  ? "border-blue-700 bg-blue-700/10 text-foreground shadow-xs"
+                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-blue-600 bg-card"
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -233,7 +233,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               {language === "en" && (
-                <span className="rounded-full bg-teal-700 text-white px-2 py-0.5 text-xs font-bold">
+                <span className="rounded-full bg-blue-700 text-white px-2 py-0.5 text-xs font-bold">
                   ✓ Active
                 </span>
               )}
@@ -243,10 +243,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => handleLanguageChange("hi")}
-              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
+              className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all cursor-pointer focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 ${
                 language === "hi"
-                  ? "border-teal-700 bg-teal-700/10 text-foreground shadow-xs"
-                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-teal-600 bg-card"
+                  ? "border-blue-700 bg-blue-700/10 text-foreground shadow-xs"
+                  : "border-stone-200/90 dark:border-stone-800/90 hover:border-blue-600 bg-card"
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -257,7 +257,7 @@ export default function SettingsPage() {
                 </div>
               </div>
               {language === "hi" && (
-                <span className="rounded-full bg-teal-700 text-white px-2 py-0.5 text-xs font-bold">
+                <span className="rounded-full bg-blue-700 text-white px-2 py-0.5 text-xs font-bold">
                   ✓ सक्रिय
                 </span>
               )}
@@ -306,7 +306,7 @@ export default function SettingsPage() {
           <div className="pt-1">
             <Link
               href="/onboarding"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2 text-xs sm:text-sm font-bold text-foreground transition-all hover:bg-current/10 hover:border-current focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2 text-xs sm:text-sm font-bold text-foreground transition-all hover:bg-current/10 hover:border-current focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600"
             >
               <span aria-hidden="true">✏️</span>
               <span>{isHi ? "दिव्यांगता विकल्प बदलें (Re-configure)" : "Change My Disabilities (Re-onboard)"}</span>

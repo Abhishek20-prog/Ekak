@@ -9,11 +9,11 @@ import useProfile from "@/hooks/useProfile";
 import { EkakLogo } from "@/components/ui";
 
 const PAGE_META = {
-  "/home":     { label: "Home",      labelHi: "होम",       icon: "🏠", color: "from-teal-500/20 to-teal-600/10",   badge: "bg-teal-600" },
-  "/learn":    { label: "Learn",     labelHi: "सीखें",     icon: "📚", color: "from-emerald-500/20 to-emerald-600/10", badge: "bg-emerald-600" },
-  "/work":     { label: "Work",      labelHi: "कार्य",     icon: "💼", color: "from-amber-500/20 to-amber-600/10",  badge: "bg-amber-500" },
-  "/connect":  { label: "Connect",   labelHi: "जोड़ें",    icon: "💬", color: "from-purple-500/20 to-purple-600/10", badge: "bg-purple-600" },
-  "/settings": { label: "Settings",  labelHi: "सेटिंग्स",  icon: "⚙️", color: "from-rose-500/20 to-rose-600/10",   badge: "bg-rose-600" },
+  "/home":     { label: "Home",      labelHi: "होम",       icon: "🏠", color: "from-blue-600/20 to-blue-700/10",   badge: "bg-blue-600" },
+  "/learn":    { label: "Learn",     labelHi: "सीखें",     icon: "📚", color: "from-amber-500/20 to-amber-600/10", badge: "bg-amber-500" },
+  "/work":     { label: "Work",      labelHi: "कार्य",     icon: "💼", color: "from-blue-600/20 to-blue-700/10",  badge: "bg-blue-600" },
+  "/connect":  { label: "Connect",   labelHi: "जोड़ें",    icon: "💬", color: "from-amber-400/20 to-amber-500/10", badge: "bg-amber-500" },
+  "/settings": { label: "Settings",  labelHi: "सेटिंग्स",  icon: "⚙️", color: "from-blue-600/20 to-blue-700/10",   badge: "bg-blue-600" },
 };
 
 function LiveClock() {
@@ -58,15 +58,15 @@ export default function Header() {
         {/* ── LEFT: Glowing Logo Block ── */}
         <Link
           href="/home"
-          className="group relative flex shrink-0 items-center gap-3 rounded-2xl p-1.5 pr-3 focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 transition-all duration-200 hover:bg-teal-600/8"
+          className="group relative flex shrink-0 items-center gap-3 rounded-2xl p-1.5 pr-3 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 transition-all duration-200 hover:bg-blue-600/8"
           aria-label="Ekak — Go to Dashboard"
         >
           {/* Halo glow behind logo icon */}
-          <span className="pointer-events-none absolute left-1 h-10 w-10 rounded-full bg-teal-500/20 blur-xl transition-all duration-300 group-hover:bg-teal-500/40 group-hover:scale-125" />
+          <span className="pointer-events-none absolute left-1 h-10 w-10 rounded-full bg-blue-500/20 blur-xl transition-all duration-300 group-hover:bg-blue-500/40 group-hover:scale-125" />
           <EkakLogo size="sm" className="relative z-10" />
 
           {/* Live "LIVE" badge */}
-          <span className="absolute -top-1 -right-0.5 flex items-center gap-0.5 rounded-full bg-gradient-to-r from-teal-600 to-teal-700 px-2 py-0.5 text-[0.52rem] font-black uppercase tracking-widest text-white shadow-sm shadow-teal-700/40">
+          <span className="absolute -top-1 -right-0.5 flex items-center gap-0.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 px-2 py-0.5 text-[0.52rem] font-black uppercase tracking-widest text-white shadow-sm shadow-blue-700/40">
             <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
             live
           </span>
@@ -114,7 +114,7 @@ export default function Header() {
               {isHi ? "🇮🇳" : "🌐"}
             </span>
             {mode.fontScale > 1.0 && (
-              <span className="rounded-full bg-teal-600/15 border border-teal-600/20 px-2 py-0.5 text-[0.6rem] font-black text-teal-800 dark:text-teal-300">
+              <span className="rounded-full bg-blue-600/15 border border-blue-600/20 px-2 py-0.5 text-[0.6rem] font-black text-blue-800 dark:text-blue-300">
                 {mode.fontScale}×
               </span>
             )}
@@ -140,10 +140,10 @@ export default function Header() {
             href="/settings"
             aria-label="Accessibility Settings"
             aria-current={isSettingsActive ? "page" : undefined}
-            className={`ekak-settings-btn group relative flex items-center gap-2 overflow-hidden rounded-2xl border-2 px-4 py-2 text-xs sm:text-sm font-black transition-all duration-250 focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 ${
+            className={`ekak-settings-btn group relative flex items-center gap-2 overflow-hidden rounded-2xl border-2 px-4 py-2 text-xs sm:text-sm font-black transition-all duration-250 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 ${
               isSettingsActive
                 ? "border-transparent text-white ekak-settings-active"
-                : "border-foreground/12 bg-foreground/5 hover:border-teal-600/50 hover:bg-teal-600/8 text-foreground"
+                : "border-foreground/12 bg-foreground/5 hover:border-blue-600/50 hover:bg-blue-600/8 text-foreground"
             }`}
           >
             {/* Shimmer sweep */}

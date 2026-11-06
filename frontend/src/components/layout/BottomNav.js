@@ -12,32 +12,32 @@ const NAV_ITEMS = [
     label: "Home",
     labelHi: "होम",
     icon: "🏠",
-    activeGlow: "from-teal-500/30 to-teal-600/20",
-    activeAccent: "bg-teal-600",
+    activeGlow: "from-blue-600/30 to-blue-700/20",
+    activeAccent: "bg-blue-600",
   },
   {
     href: "/learn",
     label: "Learn",
     labelHi: "सीखें",
     icon: "📚",
-    activeGlow: "from-emerald-500/30 to-emerald-600/20",
-    activeAccent: "bg-emerald-600",
+    activeGlow: "from-amber-500/30 to-amber-600/20",
+    activeAccent: "bg-amber-500",
   },
   {
     href: "/work",
     label: "Work",
     labelHi: "कार्य",
     icon: "💼",
-    activeGlow: "from-amber-500/30 to-amber-600/20",
-    activeAccent: "bg-amber-500",
+    activeGlow: "from-blue-600/30 to-blue-700/20",
+    activeAccent: "bg-blue-600",
   },
   {
     href: "/connect",
     label: "Connect",
     labelHi: "जोड़ें",
     icon: "💬",
-    activeGlow: "from-purple-500/30 to-purple-600/20",
-    activeAccent: "bg-purple-600",
+    activeGlow: "from-amber-500/30 to-amber-600/20",
+    activeAccent: "bg-amber-500",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function BottomNav() {
               key={item.href}
               href={item.href}
               aria-current={isActive ? "page" : undefined}
-              className={`group relative flex flex-1 flex-col items-center justify-center rounded-2xl px-1 py-2 text-center transition-all duration-250 focus-visible:outline focus-visible:outline-4 focus-visible:outline-teal-600 active:scale-90 min-h-[56px] ${
+              className={`group relative flex flex-1 flex-col items-center justify-center rounded-2xl px-1 py-2 text-center transition-all duration-250 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 active:scale-90 min-h-[56px] ${
                 isActive
                   ? `bg-gradient-to-b ${item.activeGlow} shadow-md`
                   : "hover:bg-foreground/8"

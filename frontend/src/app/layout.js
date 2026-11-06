@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const viewport = {
-  themeColor: "#0d7377",
+  themeColor: "#194db8",
   width: "device-width",
   initialScale: 1,
 };
@@ -21,7 +21,12 @@ export const metadata = {
     "Ekak is an accessibility-first inclusive platform for individuals with disabilities in India — adaptive UI for deaf, blind, motor, and cognitive needs. Every one matters.",
   manifest: "/manifest.json",
   icons: {
-    icon: "/ekak-logo.svg",
+    icon: [
+      { url: "/favicon.png", sizes: "64x64", type: "image/png" },
+      { url: "/ekak-logo-transparent.png", sizes: "192x192", type: "image/png" },
+      { url: "/ekak-logo.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icon-192.png",
   },
 };
 

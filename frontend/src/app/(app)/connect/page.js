@@ -20,7 +20,7 @@ const AAC_CATEGORIES = [
 const AAC_SYMBOLS = [
   // Health & Medical
   { id: "help",     category: "emergency", icon: "🆘", en: "I need help please",         hi: "कृपया मेरी सहायता करें",      accent: "from-rose-500/20 to-rose-600/10 border-rose-500/40" },
-  { id: "doctor",   category: "health",    icon: "👨‍⚕️", en: "I need to see a doctor",    hi: "मुझे डॉक्टर से मिलना है",   accent: "from-teal-500/20 to-teal-600/10 border-teal-500/40" },
+  { id: "doctor",   category: "health",    icon: "👨‍⚕️", en: "I need to see a doctor",    hi: "मुझे डॉक्टर से मिलना है",   accent: "from-blue-500/20 to-blue-600/10 border-blue-500/40" },
   { id: "pain",     category: "health",    icon: "😣", en: "I am in severe pain",         hi: "मुझे बहुत दर्द हो रहा है",     accent: "from-amber-500/20 to-amber-600/10 border-amber-500/40" },
   { id: "medicine", category: "health",    icon: "💊", en: "I need my medicine",         hi: "मुझे दवाई की आवश्यकता है",  accent: "from-emerald-500/20 to-emerald-600/10 border-emerald-500/40" },
   { id: "wheelchair",category: "health",   icon: "🦽", en: "I need a wheelchair",        hi: "मुझे व्हीलचेयर की आवश्यकता है", accent: "from-sky-500/20 to-sky-600/10 border-sky-500/40" },
@@ -29,11 +29,11 @@ const AAC_SYMBOLS = [
   { id: "water",    category: "daily",     icon: "💧", en: "Drinking water please",      hi: "कृपया पीने का पानी दीजिए",     accent: "from-sky-500/20 to-sky-600/10 border-sky-500/40" },
   { id: "food",     category: "daily",     icon: "🍽️", en: "I am hungry, food please",   hi: "मुझे भोजन चाहिए",            accent: "from-orange-500/20 to-orange-600/10 border-orange-500/40" },
   { id: "toilet",   category: "daily",     icon: "🚻", en: "Where is the washroom?",     hi: "शौचालय किस तरफ है?",          accent: "from-indigo-500/20 to-indigo-600/10 border-indigo-500/40" },
-  { id: "home",     category: "daily",     icon: "🏠", en: "I want to go home",          hi: "मुझे घर जाना है",             accent: "from-teal-500/20 to-teal-600/10 border-teal-500/40" },
+  { id: "home",     category: "daily",     icon: "🏠", en: "I want to go home",          hi: "मुझे घर जाना है",             accent: "from-blue-500/20 to-blue-600/10 border-blue-500/40" },
   
   // Office & Banking
   { id: "bank",     category: "office",    icon: "🏦", en: "Assistance with bank account",hi: "बैंक खाते में सहायता चाहिए", accent: "from-amber-500/20 to-amber-600/10 border-amber-500/40" },
-  { id: "udid",     category: "office",    icon: "🪪", en: "UDID / Disability Card",     hi: "यूडीआईडी दिव्यांग कार्ड दिखाना है", accent: "from-teal-500/20 to-teal-600/10 border-teal-500/40" },
+  { id: "udid",     category: "office",    icon: "🪪", en: "UDID / Disability Card",     hi: "यूडीआईडी दिव्यांग कार्ड दिखाना है", accent: "from-blue-500/20 to-blue-600/10 border-blue-500/40" },
   { id: "call",     category: "emergency", icon: "📞", en: "Please call my family",       hi: "कृपया मेरे परिवार को फोन करें", accent: "from-purple-500/20 to-purple-600/10 border-purple-500/40" },
   { id: "yes",      category: "daily",     icon: "✅", en: "Yes, definitely",            hi: "हाँ, बिल्कुल ठीक है",         accent: "from-emerald-500/20 to-emerald-600/10 border-emerald-500/40" },
   { id: "no",       category: "daily",     icon: "❌", en: "No, excuse me",              hi: "नहीं, माफ़ कीजिए",             accent: "from-rose-500/20 to-rose-600/10 border-rose-500/40" },
@@ -572,11 +572,11 @@ function InterpreterModal({ isHi, onClose }) {
     >
       <div className="absolute inset-0 bg-black/75 backdrop-blur-md" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative w-full max-w-md rounded-3xl border-2 border-teal-600/40 bg-card shadow-2xl animate-fade-up overflow-hidden">
+      <div className="relative w-full max-w-md rounded-3xl border-2 border-blue-600/40 bg-card shadow-2xl animate-fade-up overflow-hidden">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200/80 dark:border-stone-800/80 bg-gradient-to-r from-teal-700/20 via-amber-600/15 to-teal-700/20">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200/80 dark:border-stone-800/80 bg-gradient-to-r from-blue-700/20 via-amber-600/15 to-blue-700/20">
           <div className="flex items-center gap-3">
-            <span aria-hidden="true" className="text-2xl p-2 rounded-2xl bg-teal-600/20 border border-teal-600/40">
+            <span aria-hidden="true" className="text-2xl p-2 rounded-2xl bg-blue-600/20 border border-blue-600/40">
               🧑‍🏫
             </span>
             <div>
@@ -615,8 +615,8 @@ function InterpreterModal({ isHi, onClose }) {
                     }}
                     className={`flex items-center gap-3.5 rounded-2xl border-2 p-3 text-left transition-all cursor-pointer shadow-xs ${
                       purpose?.id === p.id
-                        ? "border-teal-700 bg-teal-700/15 font-bold"
-                        : "border-stone-200/90 dark:border-stone-800/90 bg-background hover:border-teal-600 hover:bg-teal-600/5"
+                        ? "border-blue-700 bg-blue-700/15 font-bold"
+                        : "border-stone-200/90 dark:border-stone-800/90 bg-background hover:border-blue-600 hover:bg-blue-600/5"
                     }`}
                   >
                     <span className="text-2xl">{p.icon}</span>
@@ -643,8 +643,8 @@ function InterpreterModal({ isHi, onClose }) {
                     }}
                     className={`flex w-full items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition-all cursor-pointer shadow-xs ${
                       slot === s
-                        ? "border-teal-700 bg-teal-700/15"
-                        : "border-stone-200/90 dark:border-stone-800/90 bg-background hover:border-teal-600"
+                        ? "border-blue-700 bg-blue-700/15"
+                        : "border-stone-200/90 dark:border-stone-800/90 bg-background hover:border-blue-600"
                     }`}
                   >
                     <div>
@@ -677,7 +677,7 @@ function InterpreterModal({ isHi, onClose }) {
                   {isHi ? "बुकिंग सारांश" : "Booking Summary"}
                 </p>
                 <p className="text-sm font-extrabold text-foreground">{isHi ? purpose?.hi : purpose?.en}</p>
-                <p className="text-xs text-teal-700 dark:text-teal-400 font-bold">
+                <p className="text-xs text-blue-700 dark:text-blue-400 font-bold">
                   {slot?.date} — {slot?.time}
                 </p>
               </div>
@@ -693,7 +693,7 @@ function InterpreterModal({ isHi, onClose }) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={isHi ? "जैसे: राहुल शर्मा" : "e.g. Rahul Sharma"}
-                    className="w-full rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2.5 text-sm font-medium text-foreground outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/25"
+                    className="w-full rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2.5 text-sm font-medium text-foreground outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/25"
                   />
                 </div>
                 <div>
@@ -707,7 +707,7 @@ function InterpreterModal({ isHi, onClose }) {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
                     placeholder="9XXXXXXXXX"
-                    className="w-full rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2.5 text-sm font-medium text-foreground outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/25"
+                    className="w-full rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-4 py-2.5 text-sm font-medium text-foreground outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/25"
                   />
                 </div>
               </div>
@@ -736,7 +736,7 @@ function InterpreterModal({ isHi, onClose }) {
           {step === 4 && (
             <div className="space-y-4 py-2 text-center animate-fade-up">
               <div className="flex flex-col items-center gap-3">
-                <div className="flex h-16 w-16 items-center justify-center rounded-3xl text-3xl shadow-lg bg-gradient-to-br from-teal-600 to-teal-800 text-white">
+                <div className="flex h-16 w-16 items-center justify-center rounded-3xl text-3xl shadow-lg bg-gradient-to-br from-blue-600 to-blue-800 text-white">
                   ✅
                 </div>
                 <h3 className="text-xl font-black text-foreground">
@@ -860,7 +860,7 @@ export default function ConnectPage() {
                   onClick={() => setOverrideLang("hi")}
                   className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                     speechLang === "hi"
-                      ? "bg-gradient-to-r from-teal-700 to-teal-800 text-white shadow-sm"
+                      ? "bg-gradient-to-r from-blue-700 to-blue-800 text-white shadow-sm"
                       : "text-foreground/75 hover:text-foreground"
                   }`}
                 >
@@ -872,7 +872,7 @@ export default function ConnectPage() {
                   onClick={() => setOverrideLang("en")}
                   className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                     speechLang === "en"
-                      ? "bg-gradient-to-r from-teal-700 to-teal-800 text-white shadow-sm"
+                      ? "bg-gradient-to-r from-blue-700 to-blue-800 text-white shadow-sm"
                       : "text-foreground/75 hover:text-foreground"
                   }`}
                 >
@@ -884,13 +884,13 @@ export default function ConnectPage() {
           </div>
 
           {/* Attractive, Non-Minimal Hero Banner with Instant Audio Test */}
-          <div className="relative overflow-hidden rounded-3xl border-2 border-teal-600/40 bg-gradient-to-br from-teal-950 via-stone-900 to-teal-950 p-5 sm:p-6 text-white shadow-xl">
-            <div className="absolute top-0 right-0 -mt-10 -mr-10 h-44 w-44 rounded-full bg-teal-500/15 blur-3xl pointer-events-none" />
+          <div className="relative overflow-hidden rounded-3xl border-2 border-blue-600/40 bg-gradient-to-br from-blue-950 via-stone-900 to-blue-950 p-5 sm:p-6 text-white shadow-xl">
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 h-44 w-44 rounded-full bg-blue-500/15 blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-44 w-44 rounded-full bg-amber-500/15 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 text-white shadow-lg">
+                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-lg">
                   {audio.speaking ? (
                     <div className="flex items-center gap-1 h-6">
                       <span className="sound-bar !h-4 !bg-white" />
@@ -954,7 +954,7 @@ export default function ConnectPage() {
 
             {/* Expandable Speed Settings */}
             {showVoiceStudio && (
-              <div className="mt-4 pt-4 border-t border-teal-500/30 flex flex-wrap items-center justify-between gap-4 animate-fade-up">
+              <div className="mt-4 pt-4 border-t border-blue-500/30 flex flex-wrap items-center justify-between gap-4 animate-fade-up">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-bold text-stone-300">आवाज बोलने की गति (Speed):</span>
                   <div className="inline-flex rounded-xl bg-stone-800/90 border border-stone-700 p-1">
@@ -969,7 +969,7 @@ export default function ConnectPage() {
                         onClick={() => audio.setRate(s.val)}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           audio.rate === s.val
-                            ? "bg-teal-600 text-white font-extrabold shadow-xs"
+                            ? "bg-blue-600 text-white font-extrabold shadow-xs"
                             : "text-stone-300 hover:text-white"
                         }`}
                       >
@@ -1014,8 +1014,8 @@ export default function ConnectPage() {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-extrabold transition-all cursor-pointer shadow-xs ${
                     isActive
-                      ? "bg-gradient-to-r from-teal-700 to-teal-800 text-white shadow-md scale-[1.02]"
-                      : "border-2 border-stone-200 dark:border-stone-800 bg-card text-foreground/80 hover:border-teal-600"
+                      ? "bg-gradient-to-r from-blue-700 to-blue-800 text-white shadow-md scale-[1.02]"
+                      : "border-2 border-stone-200 dark:border-stone-800 bg-card text-foreground/80 hover:border-blue-600"
                   }`}
                 >
                   <span className="text-base">{cat.icon}</span>
@@ -1037,14 +1037,14 @@ export default function ConnectPage() {
                   className={`group relative flex flex-col justify-between rounded-3xl border-2 p-4 text-left transition-all duration-200 cursor-pointer shadow-sm hover:shadow-lg hover:-translate-y-1 active:scale-95 bg-card ${sym.accent} ${
                     isLastSpoken
                       ? "ring-4 ring-amber-500 border-amber-500 scale-[1.02] shadow-xl"
-                      : "hover:border-teal-600/70"
+                      : "hover:border-blue-600/70"
                   }`}
                 >
                   <div className="flex items-start justify-between w-full mb-3">
                     <span className="text-3xl sm:text-4xl p-2 rounded-2xl bg-background/80 shadow-xs border border-foreground/5 group-hover:scale-110 transition-transform">
                       {sym.icon}
                     </span>
-                    <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-teal-600/15 text-teal-800 dark:text-teal-300 text-xs font-bold group-hover:bg-teal-700 group-hover:text-white transition-colors">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-blue-600/15 text-blue-800 dark:text-blue-300 text-xs font-bold group-hover:bg-blue-700 group-hover:text-white transition-colors">
                       {isLastSpoken ? "⏳" : "🔊"}
                     </span>
                   </div>
@@ -1067,14 +1067,14 @@ export default function ConnectPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* 3A. Live Microphone, Sound Equalizer & Quick Voice Assistant */}
           <section aria-labelledby="mic-heading">
-            <Card as="div" accentColor="teal" className="space-y-4">
+            <Card as="div" accentColor="blue" className="space-y-4">
               <div className="flex items-center justify-between border-b border-stone-200/80 dark:border-stone-800/80 pb-4">
                 <div className="flex items-center gap-3">
                   <div
                     className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl transition-all shadow-xs ${
                       mic.listening
                         ? "bg-rose-600 text-white animate-pulse"
-                        : "bg-teal-600/15 text-teal-800 dark:text-teal-300 border border-teal-600/30"
+                        : "bg-blue-600/15 text-blue-800 dark:text-blue-300 border border-blue-600/30"
                     }`}
                   >
                     {mic.listening ? "🎙️" : "🎤"}
@@ -1193,7 +1193,7 @@ export default function ConnectPage() {
                         mic.addTranscriptItem(phrase, "user");
                         audio.speak(phrase, "hi");
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-card text-xs font-black text-foreground hover:bg-teal-600/15 hover:text-teal-900 dark:hover:text-teal-200 border border-stone-300 dark:border-stone-700 transition-all cursor-pointer shadow-xs active:scale-95"
+                      className="px-3 py-1.5 rounded-xl bg-card text-xs font-black text-foreground hover:bg-blue-600/15 hover:text-blue-900 dark:hover:text-blue-200 border border-stone-300 dark:border-stone-700 transition-all cursor-pointer shadow-xs active:scale-95"
                     >
                       + {phrase}
                     </button>
@@ -1214,7 +1214,7 @@ export default function ConnectPage() {
                       }
                     }}
                     placeholder={isHi ? "यहाँ लिखकर सीधे आवाज में बोलें..." : "Type here to speak aloud..."}
-                    className="flex-1 rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-3 py-2 text-xs font-bold text-foreground placeholder:text-foreground/40 outline-none focus:border-teal-600"
+                    className="flex-1 rounded-xl border border-stone-300 dark:border-stone-700 bg-background px-3 py-2 text-xs font-bold text-foreground placeholder:text-foreground/40 outline-none focus:border-blue-600"
                   />
                   <button
                     type="button"
@@ -1226,7 +1226,7 @@ export default function ConnectPage() {
                       }
                     }}
                     disabled={!quickInput.trim()}
-                    className="px-4 py-2 rounded-xl bg-teal-700 text-white text-xs font-black hover:bg-teal-800 disabled:opacity-40 cursor-pointer shadow-xs"
+                    className="px-4 py-2 rounded-xl bg-blue-700 text-white text-xs font-black hover:bg-blue-800 disabled:opacity-40 cursor-pointer shadow-xs"
                   >
                     🔊 बोलें
                   </button>
@@ -1265,7 +1265,7 @@ export default function ConnectPage() {
                             <button
                               type="button"
                               onClick={() => audio.speak(item.text, isHi ? "hi" : "en")}
-                              className="p-1.5 rounded-lg bg-teal-600/10 text-teal-800 dark:text-teal-300 hover:bg-teal-600/20 cursor-pointer"
+                              className="p-1.5 rounded-lg bg-blue-600/10 text-blue-800 dark:text-blue-300 hover:bg-blue-600/20 cursor-pointer"
                               title="आवाज सुनें"
                             >
                               🔊
@@ -1378,7 +1378,7 @@ export default function ConnectPage() {
                       <button
                         type="button"
                         onClick={() => audio.speak(translatedText, transDirection === "en-to-hi" ? "hi" : "en")}
-                        className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-black cursor-pointer shadow-xs"
+                        className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-black cursor-pointer shadow-xs"
                       >
                         <span>🔊</span>
                         <span>आवाज में सुनें</span>
@@ -1450,7 +1450,7 @@ export default function ConnectPage() {
             {isHi ? "सुलभ सहायता एवं संसाधन (Support & Services)" : "Support & Services"}
           </h2>
           <div className="grid gap-5 sm:grid-cols-3">
-            <Card as="div" icon="🧑‍🏫" accentColor="teal" title={isHi ? "ISL दुभाषिया" : "ISL Interpreter"}>
+            <Card as="div" icon="🧑‍🏫" accentColor="blue" title={isHi ? "ISL दुभाषिया" : "ISL Interpreter"}>
               <p className="text-sm text-foreground/75 font-medium leading-relaxed">
                 {isHi
                   ? "प्रमाणित भारतीय सांकेतिक भाषा (ISL) दुभाषिया अस्पताल, बैंक या कचहरी के लिए बुक करें।"

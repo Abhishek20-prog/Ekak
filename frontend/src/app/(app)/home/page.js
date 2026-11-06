@@ -24,7 +24,7 @@ export default function HomePage() {
     return (
       <main className="mx-auto max-w-5xl p-6 sm:p-10">
         <div role="status" aria-live="polite" className="flex items-center gap-3">
-          <div className="h-7 w-7 animate-spin rounded-full border-3 border-teal-700 border-t-transparent" />
+          <div className="h-7 w-7 animate-spin rounded-full border-3 border-blue-600 border-t-transparent" />
           <p className="text-lg font-bold">Loading Ekak dashboard...</p>
         </div>
       </main>
@@ -44,14 +44,14 @@ export default function HomePage() {
       {/* 1. Flagship Hero Banner */}
       <section aria-label="Welcome Banner" className="relative overflow-hidden rounded-3xl hero-banner p-6 sm:p-8 space-y-5">
         {/* Decorative corner glows */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-teal-500/15 blur-2xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-500/15 blur-2xl" />
         <div className="pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-amber-500/15 blur-2xl" />
 
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <EkakLogo size="lg" />
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-600/30 bg-teal-600/15 px-3.5 py-1 text-xs font-extrabold text-teal-900 dark:text-teal-200 shadow-xs">
-              <span className="h-2 w-2 rounded-full bg-teal-600 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-600/30 bg-blue-600/15 px-3.5 py-1 text-xs font-extrabold text-blue-900 dark:text-blue-200 shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
               {isHi ? "अनुकूलन सक्रिय (Adaptive Mode ON)" : "Real-time Assistive UI"}
             </span>
             <span className="rounded-full border border-amber-600/30 bg-amber-600/15 px-3 py-1 text-xs font-extrabold text-amber-900 dark:text-amber-200">
@@ -79,7 +79,7 @@ export default function HomePage() {
         </div>
 
         {/* Quick Assist Launchpad Pills */}
-        <div className="relative pt-2 border-t border-teal-600/20 flex flex-wrap items-center gap-2.5">
+        <div className="relative pt-2 border-t border-blue-600/20 flex flex-wrap items-center gap-2.5">
           <span className="text-xs font-extrabold text-foreground/70 uppercase tracking-wider">
             {isHi ? "त्वरित सुविधाएं:" : "Quick Access:"}
           </span>
@@ -130,9 +130,9 @@ export default function HomePage() {
           <div
             role="status"
             aria-live="polite"
-            className="flex items-start gap-3.5 rounded-3xl border-2 border-teal-600/60 bg-gradient-to-br from-teal-600/15 to-teal-700/5 p-4 font-semibold text-foreground shadow-sm"
+            className="flex items-start gap-3.5 rounded-3xl border-2 border-blue-600/60 bg-gradient-to-br from-blue-600/15 to-blue-700/5 p-4 font-semibold text-foreground shadow-sm"
           >
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal-700 text-xl text-white shadow-xs">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-700 text-xl text-white shadow-xs">
               🦻
             </div>
             <div className="space-y-0.5">
@@ -176,7 +176,7 @@ export default function HomePage() {
         <Card
           as="section"
           icon="📚"
-          accentColor="teal"
+          accentColor="blue"
           title={
             mode.simpleText
               ? (isHi ? "सीखें (Learn)" : "Learn")
@@ -193,11 +193,11 @@ export default function HomePage() {
 
           <div className="optional-detail pt-3 border-t border-stone-200/80 dark:border-stone-800/80 text-xs font-semibold text-foreground/75 space-y-1.5">
             <p className="flex items-center gap-2">
-              <span className="text-teal-700 dark:text-teal-400 font-extrabold text-sm" aria-hidden="true">✓</span>
+              <span className="text-blue-600 dark:text-blue-400 font-extrabold text-sm" aria-hidden="true">✓</span>
               <span>{isHi ? "सांकेतिक भाषा वीडियो ट्रैक" : "ISL Sign Language Video Track"}</span>
             </p>
             <p className="flex items-center gap-2">
-              <span className="text-teal-700 dark:text-teal-400 font-extrabold text-sm" aria-hidden="true">✓</span>
+              <span className="text-blue-600 dark:text-blue-400 font-extrabold text-sm" aria-hidden="true">✓</span>
               <span>{isHi ? "निःशुल्क पूर्णता प्रमाण पत्र" : "Free completion certificate"}</span>
             </p>
           </div>
@@ -287,7 +287,7 @@ export default function HomePage() {
       {/* 4. Philosophy Card: Meaning of Ekak */}
       <section className="rounded-3xl border-2 border-stone-200/90 dark:border-stone-800/90 bg-card p-6 sm:p-7 shadow-xs space-y-3">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-600/15 text-2xl text-teal-800 dark:text-teal-300">
+          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600/15 text-2xl text-blue-700 dark:text-blue-300">
             🌿
           </span>
           <div>
