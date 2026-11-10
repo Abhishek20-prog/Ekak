@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* ---------- Colour tokens (all text pairs meet WCAG AA; most meet AAA) ---------- */
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --ink: #0f1b2d;
+  --muted: #3d4d63;
+  --accent: #0a6464;
+  --accent-ink: #ffffff;
+  --danger: #a8190f;
+  --ok: #14612a;
+  --focus: #ffb000;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1420;
+    --surface: #121f30;
+    --ink: #eef3fa;
+    --muted: #b9c7da;
+    --accent: #66d4d4;
+    --accent-ink: #062028;
+    --danger: #ff9f98;
+    --ok: #86e0a1;
+  }
+}
+
+/* User-chosen high contrast always wins over the OS colour scheme. */
+html[data-contrast="high"] {
+  --bg: #000000;
+  --surface: #000000;
+  --ink: #ffffff;
+  --muted: #ffffff;
+  --accent: #ffe600;
+  --accent-ink: #000000;
+  --danger: #ff9a90;
+  --ok: #a6ffa6;
+  color-scheme: dark;
+}
+
+/* ---------- Text size (everything is in rem, so this scales the whole UI) ---------- */
+html { font-size: 100%; scroll-padding-top: 5rem; }
+html[data-font-scale="125"] { font-size: 125%; }
+html[data-font-scale="150"] { font-size: 150%; }
+html[data-font-scale="175"] { font-size: 175%; }
+html[data-font-scale="200"] { font-size: 200%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+h1, h2 { line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 2.25rem; font-weight: 700; }
+h2 { font-size: 1.5rem; font-weight: 700; }
+
+a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 0.1em; text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 0.2em; }
+
+/* ---------- Focus: a dark ring inside a yellow ring is visible on any background ---------- */
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 0;
+  box-shadow: 0 0 0 6px var(--focus);
+  border-radius: 0.25rem;
+}
+main:focus, h1:focus:not(:focus-visible) { outline: none; box-shadow: none; }
+
+.skip-link {
+  position: absolute; left: 0.75rem; top: -5rem; z-index: 100;
+  background: var(--ink); color: var(--bg);
+  padding: 0.75rem 1rem; font-weight: 700; border-radius: 0.375rem;
+}
+.skip-link:focus { top: 0.75rem; }
+
+/* ---------- Components ---------- */
+.site-header { border-bottom: 2px solid var(--ink); background: var(--surface); }
+.brand { font-weight: 700; font-size: 1.25rem; text-decoration: none; color: var(--ink); }
+.nav-link { color: var(--ink); padding: 0.5rem 0.25rem; }
+.nav-link[aria-current="page"] { font-weight: 700; text-decoration-thickness: 0.2em; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 2.75rem; padding: 0.5rem 1.25rem;
+  font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+  border: 2px solid var(--ink); border-radius: 0.375rem;
+  background: transparent; color: var(--ink);
+}
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+html[data-contrast="high"] .btn-primary { border-color: var(--ink); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.stack { display: flex; flex-direction: column; gap: 1.25rem; }
+.field label, legend { font-weight: 700; }
+.field { display: flex; flex-direction: column; gap: 0.25rem; }
+.req, .hint { color: var(--muted); font-weight: 400; font-size: 0.95rem; }
+.error { color: var(--danger); font-weight: 700; }
+
+input:not([type="checkbox"]), textarea, select {
+  width: 100%; min-height: 2.75rem; padding: 0.5rem 0.75rem;
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 2px solid var(--muted); border-radius: 0.375rem;
+}
+textarea { min-height: 7rem; }
+[aria-invalid="true"] { border-color: var(--danger); border-width: 3px; }
+.check { display: flex; align-items: flex-start; gap: 0.75rem; }
+.check input { width: 1.5rem; height: 1.5rem; margin-top: 0.2rem; accent-color: var(--accent); flex-shrink: 0; }
+.check label { font-weight: 700; }
+
+fieldset { border: 2px solid var(--muted); border-radius: 0.5rem; padding: 1rem 1.25rem 1.25rem; }
+legend { padding: 0 0.5rem; font-size: 1.2rem; }
+
+.error-summary { border: 3px solid var(--danger); border-radius: 0.5rem; padding: 1rem 1.25rem; background: var(--surface); }
+.error-summary h2 { font-size: 1.2rem; color: var(--danger); }
+.error-summary ul { margin-top: 0.5rem; padding-left: 1.25rem; list-style: disc; }
+.success { border: 3px solid var(--ok); border-radius: 0.5rem; padding: 0.75rem 1rem; color: var(--ok); font-weight: 700; background: var(--surface); }
+
+/* ---------- Motion ---------- */
+html[data-motion="reduce"] *, html[data-sr="on"] * {
+  animation: none !important; transition: none !important; scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

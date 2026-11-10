@@ -27,6 +27,15 @@ export default function OnboardingPage() {
   const [language, setLanguage] = useState("en");
   const [error, setError] = useState("");
 
+  
+  function speakChoice(text) {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 1.0;
+      window.speechSynthesis.speak(u);
+    }
+  }
   function toggle(id) {
     setError("");
     setSelected((prev) =>
@@ -41,7 +50,7 @@ export default function OnboardingPage() {
       return;
     }
     saveProfile(buildProfile(selected, language));
-    router.push("/home");
+    router.push("/signup");
   }
 
   return (
@@ -91,7 +100,7 @@ export default function OnboardingPage() {
                   role="checkbox"
                   aria-checked={isChecked}
                   aria-label={`${d.label} — ${d.hint}`}
-                  onClick={() => toggle(d.id)}
+                  onClick={() => { toggle(d.id); speakChoice(selected.includes(d.id) ? `${d.label} deselected` : `${d.label} selected`); }}
                   className={`group relative flex min-h-[9rem] flex-col items-center justify-center gap-1.5 rounded-3xl border-2 p-5 text-center cursor-pointer transition-all duration-200
                     focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-blue-600
                     active:scale-95

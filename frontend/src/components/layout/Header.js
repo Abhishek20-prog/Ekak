@@ -135,6 +135,14 @@ export default function Header() {
             )}
           </div>
 
+          {/* Account Profile Link */}
+          <Link
+            href="/profile"
+            aria-label="Account Profile and Preferences"
+            className="flex items-center gap-1.5 rounded-2xl border border-foreground/12 bg-foreground/5 px-3 py-2 text-xs sm:text-sm font-bold text-foreground hover:bg-blue-600/10 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600"
+          >
+            <span>Profile</span>
+          </Link>
           {/* Settings button — glowing on active, shimmer on hover */}
           <Link
             href="/settings"

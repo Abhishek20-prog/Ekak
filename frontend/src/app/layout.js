@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ProfileProvider from "@/context/ProfileProvider";
+import LiveRegions from "@/components/LiveRegions";
+import VoiceGuide from "@/components/VoiceGuide";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -38,7 +40,7 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ProfileProvider>{children}</ProfileProvider>
+        <ProfileProvider>{children}<LiveRegions /><VoiceGuide /></ProfileProvider>
       </body>
     </html>
   );
