@@ -2,12 +2,14 @@
 // Attractive, Feature-Rich Ekak Home Dashboard — engaging visual cards, adaptive assist features, live demo presets
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
 import { buildProfile } from "@/lib/profileDefaults";
 import { PageTitle, Card, BigButton, EkakLogo } from "@/components/ui";
 
 export default function HomePage() {
   const { profile, loaded, saveProfile, resetProfile } = useProfile();
+  const router = useRouter();
   const [computedFontSize, setComputedFontSize] = useState("");
 
   useEffect(() => {
@@ -374,7 +376,7 @@ export default function HomePage() {
 
           <BigButton
             variant="danger"
-            onClick={resetProfile}
+            onClick={() => { resetProfile(); router.push("/onboarding"); }}
             className="!min-h-[50px] !text-xs sm:!text-sm !px-3.5 !py-2.5 !rounded-2xl"
           >
             <span className="text-xl">↺</span>

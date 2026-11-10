@@ -397,16 +397,20 @@ html[data-contrast="high"],
 html[data-contrast="high"] body {
   --background: #000000;
   --foreground: #ffff00;
-  --card: #000000;
+  --card: #0a0a00;
   --card-foreground: #ffff00;
   --border: #ffff00;
   background-color: #000000 !important;
   color: #ffff00 !important;
   letter-spacing: 0.025em;
 }
+
+/* Yellow borders everywhere */
 html[data-contrast="high"] * {
   border-color: #ffff00 !important;
 }
+
+/* Interactive controls get a solid yellow border */
 html[data-contrast="high"] button,
 html[data-contrast="high"] a,
 html[data-contrast="high"] [role="button"],
@@ -414,24 +418,101 @@ html[data-contrast="high"] input,
 html[data-contrast="high"] select {
   border: 2px solid #ffff00 !important;
 }
-html[data-contrast="high"] .btn-primary,
-html[data-contrast="high"] .bg-gradient-to-r,
-html[data-contrast="high"] [class*="from-blue"],
-html[data-contrast="high"] [class*="seva-selected"] {
+
+/* Primary buttons: yellow bg, black text */
+html[data-contrast="high"] .btn-primary {
   background: #ffff00 !important;
   color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
   border-color: #ffff00 !important;
 }
+
+/* Badge highlights */
 html[data-contrast="high"] .badge-highlight {
   background: transparent !important;
   color: #ffff00 !important;
   border: 1px solid #ffff00 !important;
 }
+
+/* ── Header & Nav: black background, no blur ── */
 html[data-contrast="high"] .glass,
 html[data-contrast="high"] .ekak-header,
 html[data-contrast="high"] .ekak-nav-pill {
   background: #000000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
+
+/* Hide the animated rainbow bar — invisible on black */
+html[data-contrast="high"] .ekak-header-glow-bar {
+  display: none !important;
+}
+
+/* ── All header children: yellow text ──
+   This is the base for every span/div/a inside the header */
+html[data-contrast="high"] .ekak-header,
+html[data-contrast="high"] .ekak-header * {
+  color: #ffff00 !important;
+  -webkit-text-fill-color: #ffff00 !important;
+}
+
+/* ── Centre page badge & any gradient-filled pill inside header:
+   flip to black background so the yellow text above is readable ── */
+html[data-contrast="high"] .ekak-header .bg-gradient-to-r,
+html[data-contrast="high"] .ekak-header [class*="from-blue"],
+html[data-contrast="high"] .ekak-header [class*="from-amber"],
+html[data-contrast="high"] .ekak-header [class*="bg-blue"],
+html[data-contrast="high"] .ekak-header [class*="bg-amber"],
+html[data-contrast="high"] .ekak-header [class*="bg-foreground"] {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* ── Settings "active" state: yellow bg, BLACK text (exception) ── */
+html[data-contrast="high"] .ekak-header .ekak-settings-active,
+html[data-contrast="high"] .ekak-header .ekak-settings-active * {
+  background: #ffff00 !important;
+  background-image: none !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* ── Profile link "active" state (bg-blue-600 text-white pill) ── */
+html[data-contrast="high"] .ekak-header a[aria-current="page"],
+html[data-contrast="high"] .ekak-header a[aria-current="page"] * {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* ── Bottom nav pill text ── */
+html[data-contrast="high"] .ekak-nav-pill,
+html[data-contrast="high"] .ekak-nav-pill * {
+  color: #ffff00 !important;
+  -webkit-text-fill-color: #ffff00 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
+/* ── Gradient text fix (transparent fill → yellow) ── */
+html[data-contrast="high"] .gradient-text,
+html[data-contrast="high"] .gradient-text-saffron {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #ffff00 !important;
+  background-clip: unset !important;
+  color: #ffff00 !important;
+}
+
+/* ── Page content: all gradient/coloured backgrounds → black ── */
+html[data-contrast="high"] .bg-gradient-to-r,
+html[data-contrast="high"] [class*="from-blue"],
+html[data-contrast="high"] [class*="from-amber"],
+html[data-contrast="high"] [class*="seva-selected"] {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
 html[data-contrast="high"] :focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 3px;

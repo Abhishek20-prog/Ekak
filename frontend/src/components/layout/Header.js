@@ -14,6 +14,7 @@ const PAGE_META = {
   "/work":     { label: "Work",      labelHi: "कार्य",     icon: "💼", color: "from-blue-600/20 to-blue-700/10",  badge: "bg-blue-600" },
   "/connect":  { label: "Connect",   labelHi: "जोड़ें",    icon: "💬", color: "from-amber-400/20 to-amber-500/10", badge: "bg-amber-500" },
   "/settings": { label: "Settings",  labelHi: "सेटिंग्स",  icon: "⚙️", color: "from-blue-600/20 to-blue-700/10",   badge: "bg-blue-600" },
+  "/profile":  { label: "Profile",   labelHi: "प्रोफ़ाइल", icon: "👤", color: "from-blue-600/20 to-blue-700/10",   badge: "bg-blue-600" },
 };
 
 function LiveClock() {
@@ -139,9 +140,15 @@ export default function Header() {
           <Link
             href="/profile"
             aria-label="Account Profile and Preferences"
-            className="flex items-center gap-1.5 rounded-2xl border border-foreground/12 bg-foreground/5 px-3 py-2 text-xs sm:text-sm font-bold text-foreground hover:bg-blue-600/10 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600"
+            aria-current={pathname === "/profile" ? "page" : undefined}
+            className={`flex items-center gap-1.5 rounded-2xl border px-3 py-2 text-xs sm:text-sm font-bold transition-all duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-blue-600 ${
+              pathname === "/profile"
+                ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-700/25"
+                : "border-foreground/12 bg-foreground/5 text-foreground hover:bg-blue-600/10"
+            }`}
           >
-            <span>Profile</span>
+            <span aria-hidden="true">👤</span>
+            <span className="hidden sm:inline">{isHi ? "प्रोफ़ाइल" : "Profile"}</span>
           </Link>
           {/* Settings button — glowing on active, shimmer on hover */}
           <Link

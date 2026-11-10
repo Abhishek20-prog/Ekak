@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import AuthForm from "@/components/AuthForm";
 import ReadAloud from "@/components/ReadAloud";
 import { getCurrentUser } from "@/lib/dal";
@@ -8,6 +9,7 @@ import { getCurrentUser } from "@/lib/dal";
 export const metadata = { title: "Create an account" };
 
 async function RedirectIfSignedIn() {
+  await connection();
   if (await getCurrentUser()) redirect("/home");
   return null;
 }

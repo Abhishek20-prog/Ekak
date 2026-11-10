@@ -1,7 +1,7 @@
 "use client";
 // Profile JSON ka single source of truth (Context + localStorage) + engine trigger
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { DEFAULT_PROFILE } from "@/lib/profileDefaults";
 import { applyProfile } from "@/lib/adaptEngine";
 
@@ -42,7 +42,15 @@ export default function ProfileProvider({ children }) {
     const saveProfile = (p) => setProfile(p);
     const updateMode = (partial) =>
         setProfile((p) => ({ ...p, mode: { ...p.mode, ...partial } }));
-    const resetProfile = () => setProfile(DEFAULT_PROFILE);
+
+    // Full reset: wipe localStorage key and restore DEFAULT_PROFILE
+    const resetProfile = useCallback(() => {
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+        } catch {}
+        setProfile({ ...DEFAULT_PROFILE });
+    }, []);
+
     const isOnboarded = profile.disabilities.length > 0;
 
     return (

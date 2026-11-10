@@ -1,22 +1,10 @@
 "use client";
-// Shared layout for app routes: Header, BottomNav, skip link, and onboarding guard
+// Shared layout for app routes: Header, BottomNav, skip link
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import useProfile from "@/hooks/useProfile";
 import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
 
 export default function AppLayout({ children }) {
-  const { loaded, isOnboarded } = useProfile();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (loaded && !isOnboarded) {
-      router.replace("/onboarding");
-    }
-  }, [loaded, isOnboarded, router]);
-
   return (
     <div className="flex min-h-screen flex-col">
       {/* Skip to main content - accessible keyboard shortcut */}
@@ -30,13 +18,7 @@ export default function AppLayout({ children }) {
       <Header />
 
       <div id="main-content" tabIndex={-1} className="flex-1 pb-36 focus:outline-none">
-        {loaded && !isOnboarded ? (
-          <div role="status" aria-live="polite" className="p-8 text-center">
-            <p className="text-lg text-gray-500">Redirecting to onboarding...</p>
-          </div>
-        ) : (
-          children
-        )}
+        {children}
       </div>
 
       <BottomNav />

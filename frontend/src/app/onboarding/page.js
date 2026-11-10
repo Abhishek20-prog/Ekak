@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
 import { buildProfile } from "@/lib/profileDefaults";
 import { PageTitle, BigButton, EkakLogo } from "@/components/ui";
-
 const DISABILITIES = [
   { id: "deaf", icon: "🦻", label: "Deaf / Hard of hearing", hint: "सुनने में कठिनाई", assist: "Captions + Visual Indicators" },
   { id: "speech", icon: "🗣️", label: "Speech difficulty", hint: "बोलने में कठिनाई", assist: "AAC Board + Text to Speech" },
@@ -50,7 +49,10 @@ export default function OnboardingPage() {
       return;
     }
     saveProfile(buildProfile(selected, language));
-    router.push("/signup");
+    // If the user has a session cookie (already signed in), go to /home.
+    // Otherwise go to /signup to create an account.
+    const hasSession = document.cookie.split(";").some((c) => c.trim().startsWith("session="));
+    router.push(hasSession ? "/home" : "/signup");
   }
 
   return (

@@ -1,13 +1,15 @@
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ProfileProvider from "@/context/ProfileProvider";
 import LiveRegions from "@/components/LiveRegions";
 import VoiceGuide from "@/components/VoiceGuide";
 
-const inter = Inter({
+const fontSans = localFont({
+  src: [
+    { path: "../fonts/AtkinsonHyperlegible-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/AtkinsonHyperlegible-Bold.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -36,7 +38,8 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${fontSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
